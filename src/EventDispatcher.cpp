@@ -1,10 +1,14 @@
 #include "../include/EventDispatcher.hpp"
+
+
 void EventDispatcher::addObserver(GameEvent event, ObserverPtr ptr) {
 
     auto &ins = observers[event];
     ins.push_back(std::move(ptr));
 
 }
+
+
 void EventDispatcher::notify(const Entity &entity, GameEvent event) {
     auto search = observers.find(event);
     if (search == observers.end()) {
@@ -16,5 +20,7 @@ void EventDispatcher::notify(const Entity &entity, GameEvent event) {
     }
 
 }
+
+
 EventDispatcher::EventDispatcher()
     : observers{} {}

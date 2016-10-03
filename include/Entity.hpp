@@ -29,22 +29,34 @@ class Entity: public cgf::Sprite {
 
 public:
     virtual void onEntityCollision(Entity &entity) =0;
+
     virtual void handleInput() {};
+
     virtual void update();
+
     const EntityConfig &getConfig() const;
+
     void setConfig(EntityConfig config);
+
     void loseHealth(int amount);
+
     EntityType getType() const;
+
     EntityState getState() const;
+
     int getLives() const;
+
     int getHealth() const;
-    virtual ~Entity(){}
+
+    virtual ~Entity() {}
+
 
 protected:
     Entity(cgf::Game *gameObj,
-               EntityType type,
-               EntityConfig config,
-               EventDispatcher &eventDispatcher);
+           EntityType type,
+           EntityConfig config,
+           EventDispatcher &eventDispatcher);
+
     cgf::Game *gameObj;
     EntityType type;
     EntityState state{ALIVE};
