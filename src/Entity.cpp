@@ -39,7 +39,6 @@ void Entity::loseHealth(int amount) {
     amount = std::abs(amount);
 
     health = std::max(0, health - amount);
-    eventDispatcher.notify(*this, GameEvent::ENTITY_TOOK_DAMAGE);
 
     if (health <= 0) {
         if (lives <= 1) {
@@ -49,7 +48,11 @@ void Entity::loseHealth(int amount) {
         else {
             --lives;
             eventDispatcher.notify(*this, GameEvent::ENTITY_LOST_LIFE);
+            health = config.health;
         }
+    }
+    else {
+        eventDispatcher.notify(*this, GameEvent::ENTITY_TOOK_DAMAGE);
     }
 
 }
