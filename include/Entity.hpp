@@ -2,7 +2,7 @@
 
 #include <Sprite.h>
 #include <Game.h>
-
+#include "EventDispatcher.hpp"
 
 enum EntityType: short {
     JOE,
@@ -23,6 +23,8 @@ struct EntityConfig {
 
 };
 
+class EventDispatcher;
+
 class Entity: public cgf::Sprite {
 
 public:
@@ -32,16 +34,24 @@ public:
     const EntityConfig &getConfig() const;
     void setConfig(EntityConfig config);
     void loseHealth(int amount);
+    EntityType getType() const;
+    EntityState getState() const;
+    int getLives() const;
+    int getHealth() const;
+    virtual ~Entity(){}
 
 protected:
-    Entity(cgf::Game *gameObj, EntityType type, EntityConfig config);
+    Entity(cgf::Game *gameObj,
+               EntityType type,
+               EntityConfig config,
+               EventDispatcher &eventDispatcher);
     cgf::Game *gameObj;
     EntityType type;
     EntityState state{ALIVE};
     EntityConfig config;
-private:
     int lives;
     int health;
+    EventDispatcher &eventDispatcher;
 
 };
 
