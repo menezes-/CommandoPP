@@ -23,8 +23,7 @@ void Entity::update() {
     if (state != DEAD) {
         auto delta = gameObj->getUpdateInterval();
         cgf::Sprite::update(delta, config.movable);
-    }
-    else if (state == DYING && isStopped()) {
+    } else if (state == DYING && isStopped()) {
         state = DEAD;
         setVisible(false);
     }
@@ -44,14 +43,12 @@ void Entity::loseHealth(int amount) {
         if (lives <= 1) {
             state = DYING;
             eventDispatcher.notify(*this, ENTITY_IS_DEAD);
-        }
-        else {
+        } else {
             --lives;
             eventDispatcher.notify(*this, GameEvent::ENTITY_LOST_LIFE);
             health = config.health;
         }
-    }
-    else {
+    } else {
         eventDispatcher.notify(*this, GameEvent::ENTITY_TOOK_DAMAGE);
     }
 

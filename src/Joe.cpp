@@ -21,7 +21,7 @@ Joe::Joe(cgf::Game *gameObj, EntityConfig config, EventDispatcher &eventDispatch
 
     currAnimation = directions[std::make_pair(0, 0)];
     setAnimation(currAnimation);
-
+    setAnimRate(15);
 
     auto im = cgf::InputManager::instance();
 
@@ -53,6 +53,7 @@ void Joe::handleInput() {
 
     int dirx = 0;
     int diry = 0;
+    int speed = 100;
 
     if (im->testEvent("left")) {
         dirx = -1;
@@ -70,16 +71,25 @@ void Joe::handleInput() {
         diry = 1;
     }
 
+
+    if (dirx != 0 && diry != 0) {
+        speed *= 0.85;
+    }
+
     if (dirx == 0 && diry == 0) {
         pause();
-    }
-    else {
+        currAnimation = "";
+    } else {
         auto pair = std::make_pair(dirx, diry);
         auto animation = directions[pair];
         if (animation != currAnimation) {
             setAnimation(animation);
+            currAnimation = animation;
             play();
         }
     }
+
+    setXspeed(speed * dirx);
+    setYspeed(speed * diry);
 
 }
