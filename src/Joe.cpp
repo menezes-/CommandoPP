@@ -1,5 +1,6 @@
 #include "../include/Joe.hpp"
 #include <InputManager.h>
+#include <Debug.h>
 
 
 Joe::Joe(cgf::Game *gameObj, EntityConfig config, EventDispatcher &eventDispatcher)
@@ -71,7 +72,7 @@ void Joe::handleInput() {
         diry = 1;
     }
 
-
+    // se andando na diagonal a velocidade é menor
     if (dirx != 0 && diry != 0) {
         speed *= 0.85;
     }
@@ -81,10 +82,15 @@ void Joe::handleInput() {
         currAnimation = "";
     } else {
         auto pair = std::make_pair(dirx, diry);
-        auto animation = directions[pair];
-        if (animation != currAnimation) {
-            setAnimation(animation);
-            currAnimation = animation;
+        auto anim_find = directions.find(pair);
+        if (anim_find == directions.end()) {
+            DEBUG_MSG("direção " << dirx << ", " << diry << " Não encontrada!");
+            // vai pra animação default
+            anim_find = directions.find(std::make_pair(0, 0));
+        }
+        if (anim_find->second != currAnimation) {
+            setAnimation(anim_find->second);
+            currAnimation = anim_find->second;
             play();
         }
     }
