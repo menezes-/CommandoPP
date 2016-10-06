@@ -4,7 +4,7 @@
 
 int main() {
     cgf::Game game{30, 60};
-    PlayState playState{};
+    PlayState playState{&game};
     game.init("Commando++", 800, 600, false);
     game.changeState(&playState);
 

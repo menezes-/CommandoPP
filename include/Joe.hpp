@@ -7,6 +7,8 @@ class Joe final: public Entity {
 public:
     Joe(cgf::Game *gameObj, EntityConfig config, EventDispatcher &eventDispatcher);
 
+    Joe(cgf::Game *gameObj, EventDispatcher &eventDispatcher);
+
     void onEntityCollision(Entity &entity) override;
 
     void handleInput() override;

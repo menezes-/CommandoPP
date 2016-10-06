@@ -3,11 +3,17 @@
 #include <Debug.h>
 
 
+Joe::Joe(cgf::Game *gameObj, EventDispatcher &eventDispatcher)
+    : Joe(gameObj, EntityConfig{}, eventDispatcher) {
+
+}
+
+
 Joe::Joe(cgf::Game *gameObj, EntityConfig config, EventDispatcher &eventDispatcher)
     : Entity(gameObj, JOE, config, eventDispatcher) {
 
 
-    load("resources/sprites/sprites_small.png", 24, 24, 0, 0, 0, 0, 15, 9, 15 * 9);
+    load("resources/sprites/sprites_small.png", 24, 24, 0, 0, 0, 0, 15, 9);
     loadAnimation("resources/animations/joe.xml");
 
     directions = {{std::make_pair(0, 0), "Up"}, //default
