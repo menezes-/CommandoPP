@@ -11,11 +11,13 @@ public:
 
     void onEntityCollision(Entity &entity) override;
 
-    void handleInput() override;
+    void handleInput(const KeyBitset &pressedKeys) override;
+
+    void update() override;
 
 private:
     std::map<std::pair<int, int>, std::string> directions;
-    std::string currAnimation;
+
 };
 
 

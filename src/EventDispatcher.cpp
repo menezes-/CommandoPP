@@ -9,7 +9,7 @@ void EventDispatcher::addObserver(GameEvent event, ObserverPtr ptr) {
 }
 
 
-void EventDispatcher::notify(const Entity &entity, GameEvent event) {
+void EventDispatcher::notify(const Entity *entity, GameEvent event) {
     auto search = observers.find(event);
     if (search == observers.end()) {
         return;

@@ -9,14 +9,21 @@ void PlayState::init() {
 void PlayState::handleEvents(cgf::Game *game) {
     auto screen = game->getScreen();
     sf::Event event;
-
+    keyBitset.reset();
     while (screen->pollEvent(event)) {
-        if (event.type == sf::Event::Closed) {
-            game->quit();
-            return;
+        switch (event.type) {
+            case sf::Event::Closed:
+                game->quit();
+                return;
+            case sf::Event::KeyPressed:
+                keyBitset.set(event.key.code);
+                break;
+            default:
+                break;
         }
+
     }
-    joe.handleInput();
+    joe.handleInput(keyBitset);
 }
 
 

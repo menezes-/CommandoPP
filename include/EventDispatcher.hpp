@@ -8,7 +8,7 @@ class EventDispatcher {
 public:
     void addObserver(GameEvent event, ObserverPtr ptr);
 
-    void notify(const Entity &entity, GameEvent event);
+    void notify(const Entity *entity, GameEvent event);
 
     EventDispatcher();
 

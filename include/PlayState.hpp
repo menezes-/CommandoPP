@@ -24,7 +24,8 @@ private:
 
     void resume() override;
 
-private:
+    KeyBitset keyBitset;
+
     Joe joe;
     cgf::Game *game;
     EventDispatcher eventDispatcher;

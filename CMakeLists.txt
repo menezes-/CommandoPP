@@ -29,6 +29,7 @@ add_custom_command(TARGET Commando POST_BUILD
 
 
 if (CMAKE_BUILD_TYPE STREQUAL "Release")
+    target_compile_definitions(Commando PRIVATE -DNDEBUG)
     set(CGF_DISABLE_LOGGING TRUE CACHE BOOL "Mensagens de debug desabilitadas em modo release" FORCE)
 endif ()
 

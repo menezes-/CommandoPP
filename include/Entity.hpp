@@ -2,6 +2,8 @@
 
 #include <Sprite.h>
 #include <Game.h>
+#include <bitset>
+#include <SFML/Window/Keyboard.hpp>
 #include "EventDispatcher.hpp"
 
 enum EntityType: short {
@@ -23,6 +25,9 @@ struct EntityConfig {
 
 };
 
+//Bitset que guarda todas as teclas pressionadas
+using KeyBitset = std::bitset<sf::Keyboard::KeyCount>;
+
 class EventDispatcher;
 
 class Entity: public cgf::Sprite {
@@ -30,7 +35,7 @@ class Entity: public cgf::Sprite {
 public:
     virtual void onEntityCollision(Entity &entity) =0;
 
-    virtual void handleInput() {};
+    virtual void handleInput(const KeyBitset &pressedKeys) {};
 
     virtual void update();
 
@@ -64,6 +69,8 @@ protected:
     int lives;
     int health;
     EventDispatcher &eventDispatcher;
+    std::string currAnimation;
+    void setAndPlay(std::string name);
 
 };
 

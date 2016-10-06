@@ -14,7 +14,7 @@ class Observer {
 public:
     virtual ~Observer() {}
 
-    virtual void onNotify(const Entity &entity, GameEvent event) =0;
+    virtual void onNotify(const Entity *entity, GameEvent event) =0;
 
 };
 using ObserverPtr = std::unique_ptr<Observer>;

@@ -55,7 +55,12 @@ void Joe::onEntityCollision(Entity &entity) {
 }
 
 
-void Joe::handleInput() {
+void Joe::handleInput(const KeyBitset &pressedKeys) {
+
+    if (state == DYING || state == DEAD) {
+        return;
+    }
+
     auto im = cgf::InputManager::instance();
 
     int dirx = 0;
@@ -78,6 +83,12 @@ void Joe::handleInput() {
         diry = 1;
     }
 
+#ifndef NDEBUG
+    if (pressedKeys.test(sf::Keyboard::L)) {
+        loseHealth(config.health / 2);
+    }
+#endif
+
     // se andando na diagonal a velocidade é menor
     if (dirx != 0 && diry != 0) {
         speed *= 0.85;
@@ -85,23 +96,31 @@ void Joe::handleInput() {
 
     if (dirx == 0 && diry == 0) {
         pause();
-        currAnimation = "";
+        setAndPlay("");
     } else {
         auto pair = std::make_pair(dirx, diry);
         auto anim_find = directions.find(pair);
         if (anim_find == directions.end()) {
-            DEBUG_MSG("direção " << dirx << ", " << diry << " Não encontrada!");
+            DEBUG_MSG("direção " << dirx << ", " << diry << " não encontrada!");
             // vai pra animação default
             anim_find = directions.find(std::make_pair(0, 0));
         }
-        if (anim_find->second != currAnimation) {
-            setAnimation(anim_find->second);
-            currAnimation = anim_find->second;
-            play();
-        }
+        setAndPlay(anim_find->second);
     }
 
     setXspeed(speed * dirx);
     setYspeed(speed * diry);
 
+}
+
+
+void Joe::update() {
+
+    if (state == DYING && currAnimation != "Die") {
+        setAndPlay("Die");
+        setAnimRate(2);
+
+    }
+
+    Entity::update();
 }
