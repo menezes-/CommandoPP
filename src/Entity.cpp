@@ -25,19 +25,22 @@ void Entity::update() {
 
     switch (state) {
         case DEAD:
+            if (isVisible()) {
+                setVisible(false);
+            }
+            eventDispatcher.notify(this, ENTITY_IS_DEAD);
             break;
-        /*
-         * Case Fallthroug.
-         * Se a entidade está no estado dying, ou seja, a animação de morte ta "acontecendo"
-         * eu ainda preciso dar um Sprite::update, porém se a animação já terminou eu preciso sair do
-         * estado DYING e ir pro estado DEAD, por isso o uso do Case Fallthrough.
-         *
-         */
+            /*
+             * Case Fallthroug.
+             * Se a entidade está no estado dying, ou seja, a animação de morte ta "acontecendo"
+             * eu ainda preciso dar um Sprite::update, porém se a animação já terminou eu preciso sair do
+             * estado DYING e ir pro estado DEAD, por isso o uso do Case Fallthrough.
+             *
+             */
         case DYING:
             if (isStopped()) { // terminei de tocar a animação de morte ?
                 DEBUG_MSG("Entidade Morreu");
                 state = DEAD;
-                setVisible(false);
                 return; // vou para o estado de morto e termino o update
             }
         default: // se eu não estou no estado "DYING" OU eu ESTOU no estado "DYING" E a animção de morte NÃO terminou
@@ -61,12 +64,9 @@ void Entity::loseHealth(int amount) {
     if (health <= 0) {
         --lives;
         state = DYING;
-        if (lives <= 0) {
-            eventDispatcher.notify(this, ENTITY_IS_DEAD);
-        } else {
-            eventDispatcher.notify(this, GameEvent::ENTITY_LOST_LIFE);
-            health = config.health;
-        }
+        eventDispatcher.notify(this, GameEvent::ENTITY_IS_DYING);
+        health = config.health;
+
     } else {
         eventDispatcher.notify(this, GameEvent::ENTITY_TOOK_DAMAGE);
     }

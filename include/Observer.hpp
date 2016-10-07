@@ -5,7 +5,7 @@
 
 enum GameEvent {
     ENTITY_IS_DEAD,
-    ENTITY_LOST_LIFE,
+    ENTITY_IS_DYING,
     ENTITY_TOOK_DAMAGE,
 };
 
