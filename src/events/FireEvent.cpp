@@ -32,10 +32,6 @@ FireEvent::FireEvent(Entity *from, sf::Vector2f direction)
 
 }
 
-
-#ifndef NDEBUG
-
-
 FireEvent::FireEvent(sf::Vector2f from, Entity *target, const WeaponConfig &weaponConfig)
     : GameEvent(FIRE) {
 
@@ -49,6 +45,3 @@ FireEvent::FireEvent(sf::Vector2f from, Entity *target, const WeaponConfig &weap
     this->position = from;
 
 }
-
-
-#endif

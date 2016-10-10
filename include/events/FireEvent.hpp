@@ -26,14 +26,12 @@ public:
 
     sf::Vector2f getPosition() const;
 
-#ifndef NDEBUG
     /**
      * Essa função serve apenas para teste.
      * Permite um tiro vir de uma posição qualquer
      * (idealmente um tiro sempre deve vir de uma entidade)
      */
      FireEvent(sf::Vector2f from, Entity *target, const WeaponConfig& weaponConfig);
-#endif
 
 private:
     WeaponConfig weaponConfig;
