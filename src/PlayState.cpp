@@ -37,13 +37,13 @@ void PlayState::handleEvents(cgf::Game *game) {
         }
 
     }
-#ifndef NDEBUG
+
     if (keyBitset.test(sf::Keyboard::LShift)) {
 
         eventDispatcher.notify(make_event<FireEvent>(sf::Vector2f{0,0}, &joe, Weapon::weaponsConfig[MACHINE_GUN]));
 
     }
-#endif
+
     joe.handleInput(keyBitset, buttonBitset, game);
 }
 
