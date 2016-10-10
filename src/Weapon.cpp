@@ -23,7 +23,7 @@ const std::array<WeaponConfig, WEAPON_COUNT> Weapon::weaponsConfig =
              RPM(1000),
              25,
              300,
-             sf::seconds(6),
+             sf::seconds(2),
              false,
              50
          },
@@ -34,7 +34,7 @@ const std::array<WeaponConfig, WEAPON_COUNT> Weapon::weaponsConfig =
              RPM(30), // sf::Time cooldown
              100, // int ammo_damage
              100, // int ammo_velocity
-             sf::seconds(1.5), // int ammo_lifetime
+             sf::milliseconds(500), // int ammo_lifetime
              false, // bool destroyable
              4 // short magazineSize
          },
