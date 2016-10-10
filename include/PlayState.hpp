@@ -1,8 +1,8 @@
 #pragma once
 
+#include <vector>
 #include <GameState.h>
 #include "Joe.hpp"
-#include "EventDispatcher.hpp"
 
 
 class PlayState final: public cgf::GameState {
@@ -17,6 +17,10 @@ public:
 
     PlayState(cgf::Game *game);
 
+    void addEntity(Entity *entity);
+
+    void removeEntity(Entity *entity);
+
 private:
     void cleanup() override;
 
@@ -25,6 +29,9 @@ private:
     void resume() override;
 
     KeyBitset keyBitset;
+    MouseBitset buttonBitset;
+
+    std::vector<Entity *> entities;
 
     Joe joe;
     cgf::Game *game;

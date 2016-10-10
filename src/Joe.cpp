@@ -1,32 +1,33 @@
-#include "../include/Joe.hpp"
+#include "Joe.hpp"
 #include <InputManager.h>
 #include <Debug.h>
+#include <events/FireEvent.hpp>
+#include "GameMath.hpp"
 
 
-Joe::Joe(cgf::Game *gameObj, EventDispatcher &eventDispatcher)
-    : Joe(gameObj, EntityConfig{}, eventDispatcher) {
+Joe::Joe(EventDispatcher &eventDispatcher)
+    : Joe(EntityConfig{}, eventDispatcher) {
 
 }
 
 
-Joe::Joe(cgf::Game *gameObj, EntityConfig config, EventDispatcher &eventDispatcher)
-    : Entity(gameObj, JOE, config, eventDispatcher) {
+Joe::Joe(EntityConfig config, EventDispatcher &eventDispatcher)
+    : Entity(JOE, config, eventDispatcher), weapon{this, eventDispatcher, MACHINE_GUN} {
 
-
-    load("resources/sprites/sprites_small.png", 24, 24, 0, 0, 0, 0, 15, 9);
+    loadSmallSprites();
     loadAnimation("resources/animations/joe.xml");
 
-    directions = {{std::make_pair(0, 0), "Up"}, //default
-                  {std::make_pair(0, -1), "Up"},
-                  {std::make_pair(1, -1), "RightUp"},
-                  {std::make_pair(1, 0), "Right"},
-                  {std::make_pair(1, 1), "RightDown"},
-                  {std::make_pair(0, 1), "Down"},
-                  {std::make_pair(-1, 1), "LeftDown"},
-                  {std::make_pair(-1, 0), "Left"},
-                  {std::make_pair(-1, -1), "LeftUp"}};
+    directions = {{Dir(0, 0), "Up"}, //default
+                  {Dir(0, -1), "Up"},
+                  {Dir(1, -1), "RightUp"},
+                  {Dir(1, 0), "Right"},
+                  {Dir(1, 1), "RightDown"},
+                  {Dir(0, 1), "Down"},
+                  {Dir(-1, 1), "LeftDown"},
+                  {Dir(-1, 0), "Left"},
+                  {Dir(-1, -1), "LeftUp"}};
 
-    currAnimation = directions[std::make_pair(0, 0)];
+    currAnimation = directions[Dir(0, 0)];
     setAnimation(currAnimation);
     setAnimRate(15);
 
@@ -36,6 +37,7 @@ Joe::Joe(cgf::Game *gameObj, EntityConfig config, EventDispatcher &eventDispatch
     im->addKeyInput("right", sf::Keyboard::D);
     im->addKeyInput("up", sf::Keyboard::W);
     im->addKeyInput("down", sf::Keyboard::S);
+    im->addMouseInput("fire", sf::Mouse::Left);
 
 };
 
@@ -55,13 +57,13 @@ void Joe::onEntityCollision(Entity &entity) {
 }
 
 
-void Joe::handleInput(const KeyBitset &pressedKeys) {
+void Joe::handleInput(const KeyBitset &pressedKeys, const MouseBitset &pressedButtons, cgf::Game *gameObj) {
 
     if (state == DYING || state == DEAD) {
         return;
     }
 
-    auto im = cgf::InputManager::instance();
+    static auto im = cgf::InputManager::instance();
 
     int dirx = 0;
     int diry = 0;
@@ -98,14 +100,29 @@ void Joe::handleInput(const KeyBitset &pressedKeys) {
         pause();
         setAndPlay("");
     } else {
-        auto pair = std::make_pair(dirx, diry);
+        auto pair = Dir(dirx, diry);
         auto anim_find = directions.find(pair);
         if (anim_find == directions.end()) {
             DEBUG_MSG("direção " << dirx << ", " << diry << " não encontrada!");
             // vai pra animação default
-            anim_find = directions.find(std::make_pair(0, 0));
+            anim_find = directions.find(Dir(0, 0));
         }
         setAndPlay(anim_find->second);
+    }
+
+    if (weapon.getCurrWeaponConfig()) {
+        if (weapon.getCurrWeaponConfig()->type == AUTOMATIC) {
+            if (im->testEvent("fire") && weapon.fire()) {
+                auto dir = getMouseDirectionFromPosition(getPosition(), gameObj->getScreen());
+                eventDispatcher.notify(make_event<FireEvent>(this, dir));
+            }
+        } else {
+            if (pressedButtons.test(sf::Mouse::Left) && weapon.fire()) {
+                auto dir = getMouseDirectionFromPosition(getPosition(), gameObj->getScreen());
+                eventDispatcher.notify(make_event<FireEvent>(this, dir));
+            }
+        }
+
     }
 
     setXspeed(speed * dirx);
@@ -114,7 +131,7 @@ void Joe::handleInput(const KeyBitset &pressedKeys) {
 }
 
 
-void Joe::update() {
+void Joe::update(cgf::Game *gameObj) {
 
     if (state == DYING && currAnimation != "Die") {
         setAndPlay("Die");
@@ -122,5 +139,10 @@ void Joe::update() {
 
     }
 
-    Entity::update();
+    Entity::update(gameObj);
+}
+
+
+Weapon &Joe::getWeapon() {
+    return weapon;
 }

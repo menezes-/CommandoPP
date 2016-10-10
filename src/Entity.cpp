@@ -1,13 +1,15 @@
-#include "../include/Entity.hpp"
+#include "Entity.hpp"
 #include <Debug.h>
+#include "Bullet.hpp"
+
+int Entity::s_id;
 
 
-Entity::Entity(cgf::Game *gameObj,
-               EntityType type,
+Entity::Entity(EntityType type,
                EntityConfig config,
                EventDispatcher &eventDispatcher)
-    : gameObj{gameObj}, type{type}, config(config), health{config.health}, lives{config.lives},
-      eventDispatcher{eventDispatcher} {}
+    : type{type}, config(config), health{config.health}, lives{config.lives},
+      eventDispatcher{eventDispatcher}, id{++s_id} {}
 
 
 const EntityConfig &Entity::getConfig() const {
@@ -20,7 +22,7 @@ void Entity::setConfig(EntityConfig config) {
 }
 
 
-void Entity::update() {
+void Entity::update(cgf::Game *gameObj) {
     if (!isVisible()) return;
 
     switch (state) {
@@ -28,7 +30,7 @@ void Entity::update() {
             if (isVisible()) {
                 setVisible(false);
             }
-            eventDispatcher.notify(this, ENTITY_IS_DEAD);
+            eventDispatcher.notify(make_event<GameEvent>(this, ENTITY_IS_DEAD));
             break;
             /*
              * Case Fallthroug.
@@ -39,7 +41,6 @@ void Entity::update() {
              */
         case DYING:
             if (isStopped()) { // terminei de tocar a animação de morte ?
-                DEBUG_MSG("Entidade Morreu");
                 state = DEAD;
                 return; // vou para o estado de morto e termino o update
             }
@@ -64,11 +65,11 @@ void Entity::loseHealth(int amount) {
     if (health <= 0) {
         --lives;
         state = DYING;
-        eventDispatcher.notify(this, GameEvent::ENTITY_IS_DYING);
+        eventDispatcher.notify(make_event<GameEvent>(this, Event::ENTITY_IS_DYING));
         health = config.health;
 
     } else {
-        eventDispatcher.notify(this, GameEvent::ENTITY_TOOK_DAMAGE);
+        eventDispatcher.notify(make_event<GameEvent>(this, Event::ENTITY_TOOK_DAMAGE));
     }
 
 }
@@ -106,3 +107,51 @@ void Entity::setAndPlay(std::string name) {
     }
 
 }
+
+
+void Entity::loadSmallSprites() {
+    load("resources/sprites/sprites_small.png", 24, 24, 0, 0, 0, 0, 15, 9);
+
+}
+
+
+bool Entity::isEnemy(const Entity &other) {
+    auto ot = other.type;
+    if (other.type == BULLET) {
+        auto bullet = static_cast<const Bullet &>(other);
+        ot = bullet.getOwner();
+    }
+
+    if (type == JOE && ot != JOE) {
+        return true;
+    } else return type != JOE && ot == JOE;
+
+}
+
+
+int Entity::getId() {
+    return id;
+}
+
+
+Entity::operator std::string() const {
+    std::string type_name{};
+    switch (type) {
+        case JOE:
+            type_name = "Joe";
+            break;
+        case DUDE:
+            type_name = "Dude";
+            break;
+        case BULLET:
+            type_name = "Bullet";
+            break;
+    }
+
+    return type_name + std::string("#") + std::to_string(id);
+
+}
+
+
+EntityConfig::EntityConfig(int lives, int health, bool godMode, bool movable)
+    : lives(lives), health(health), godMode(godMode), movable(movable) {}
