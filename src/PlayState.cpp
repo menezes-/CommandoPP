@@ -3,7 +3,9 @@
 #include <algorithm>
 #include <events/FireEvent.hpp>
 #include <SFML/System.hpp>
+#include <GameMath.hpp>
 #include "Debug.h"
+
 
 void PlayState::init() {
 
@@ -21,7 +23,7 @@ PlayState::PlayState(cgf::Game *game)
 
     joe.setPosition(50, 100);
 
-    DEBUG_MSG("Tamanho do map "<< map.GetMapSize().x << " " << map.GetMapSize().y);
+    DEBUG_MSG("Tamanho do map " << map.GetMapSize().x << " " << map.GetMapSize().y);
 }
 
 
@@ -52,7 +54,7 @@ void PlayState::handleEvents(cgf::Game *game) {
 
     if (keyBitset.test(sf::Keyboard::LShift)) {
 
-        eventDispatcher.notify(make_event<FireEvent>(sf::Vector2f{0,0}, &joe, Weapon::weaponsConfig[MACHINE_GUN]));
+        eventDispatcher.notify(make_event<FireEvent>(sf::Vector2f{0, 0}, &joe, Weapon::weaponsConfig[MACHINE_GUN]));
 
     }
 
@@ -62,6 +64,9 @@ void PlayState::handleEvents(cgf::Game *game) {
 
 
 void PlayState::update(cgf::Game *game) {
+    auto screen = game->getScreen();
+    map.UpdateQuadTree(calcViewRect(screen->getView()));
+
     joe.update(game);
 
     for (auto e: entities) {
@@ -116,20 +121,20 @@ void PlayState::centerMapOnPlayer(sf::RenderWindow *screen) {
     sf::Vector2f pos = joe.getPosition();
 
     float panX = viewsize.x; // minimum pan
-    if(pos.x >= viewsize.x)
+    if (pos.x >= viewsize.x)
         panX = pos.x;
 
-    if(panX >= mapsize.x - viewsize.x)
+    if (panX >= mapsize.x - viewsize.x)
         panX = mapsize.x - viewsize.x;
 
     float panY = viewsize.y; // minimum pan
-    if(pos.y >= viewsize.y)
+    if (pos.y >= viewsize.y)
         panY = pos.y;
 
-    if(panY >= mapsize.y - viewsize.y)
+    if (panY >= mapsize.y - viewsize.y)
         panY = mapsize.y - viewsize.y;
 
-    sf::Vector2f center(panX,panY);
+    sf::Vector2f center(panX, panY);
     view.setCenter(center);
     screen->setView(view);
 }
@@ -141,24 +146,16 @@ sf::View PlayState::calcView(const sf::Vector2u &windowsize, const sf::Vector2u 
     float screenwidth = windowsize.x / static_cast<float>(designedsize.x);
     float screenheight = windowsize.y / static_cast<float>(designedsize.y);
 
-    if(screenwidth > screenheight)
-    {
+    if (screenwidth > screenheight) {
         viewport.width = screenheight / screenwidth;
         viewport.left = (1.f - viewport.width) / 2.f;
-    }
-    else if(screenwidth < screenheight)
-    {
+    } else if (screenwidth < screenheight) {
         viewport.height = screenwidth / screenheight;
         viewport.top = (1.f - viewport.height) / 2.f;
     }
 
-    sf::View view( sf::FloatRect( 0, 0, designedsize.x , designedsize.y ) );
+    sf::View view(sf::FloatRect(0, 0, designedsize.x, designedsize.y));
     view.setViewport(viewport);
 
     return view;
-}
-
-
-void PlayState::letterBox(cgf::Game *game) {
-
 }

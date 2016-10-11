@@ -138,18 +138,20 @@ interceptionAngle(sf::Vector2<T> originPos, sf::Vector2<U> targetPos, sf::Vector
 
 }
 
-inline sf::Vector2f getMouseDirectionFromPosition(const sf::Vector2f& pos, sf::RenderWindow* screen){
+
+inline sf::Vector2f getMouseDirectionFromPosition(const sf::Vector2f &pos, sf::RenderWindow *screen) {
 
     auto mouse = screen->mapPixelToCoords(sf::Mouse::getPosition(*screen));
     auto playerPosition = pos;
     auto angleX = mouse.x - playerPosition.x;
     auto angleY = mouse.y - playerPosition.y;
-    auto vl = std::sqrt(angleX*angleX + angleY*angleY);
+    auto vl = std::sqrt(angleX * angleX + angleY * angleY);
     return sf::Vector2f{angleX / vl, angleY / vl};
 
 }
 
-inline sf::FloatRect calcViewRect(const sf::View& view){
+
+inline sf::FloatRect calcViewRect(const sf::View &view) {
     sf::FloatRect viewRect;
     viewRect.left = view.getCenter().x - (view.getSize().x / 2.f);
     viewRect.top = view.getCenter().y - (view.getSize().y / 2.f);
