@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <GameState.h>
+#include <tmx/MapLoader.h>
 #include "Joe.hpp"
 
 
@@ -30,6 +31,8 @@ private:
 
     KeyBitset keyBitset;
     MouseBitset buttonBitset;
+
+    tmx::MapLoader map;
 
     std::vector<Entity *> entities;
 

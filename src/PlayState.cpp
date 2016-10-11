@@ -10,10 +10,11 @@ void PlayState::init() {
 
 
 PlayState::PlayState(cgf::Game *game)
-    : game(game), joe{EntityConfig{}, eventDispatcher} {
+    : game(game), joe{EntityConfig{}, eventDispatcher}, map{"resources/levels/"} {
 
     eventDispatcher.addObserver(FIRE, std::unique_ptr<Observer>(new WeaponSystem(this)));
 
+    map.AddSearchPath("resources/sprites/");
 }
 
 

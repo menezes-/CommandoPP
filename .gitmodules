@@ -1,3 +1,4 @@
 [submodule "lib/CGF"]
 	path = lib/CGF
 	url = https://github.com/menezes-/CGF.git
+	branch = update_tmxloader

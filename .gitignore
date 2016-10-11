@@ -38,4 +38,4 @@ fabric.properties
 *.exe
 *.out
 *.app
-lib/CGF
+lib/CGF/
