@@ -148,3 +148,12 @@ inline sf::Vector2f getMouseDirectionFromPosition(const sf::Vector2f& pos, sf::R
     return sf::Vector2f{angleX / vl, angleY / vl};
 
 }
+
+inline sf::FloatRect calcViewRect(const sf::View& view){
+    sf::FloatRect viewRect;
+    viewRect.left = view.getCenter().x - (view.getSize().x / 2.f);
+    viewRect.top = view.getCenter().y - (view.getSize().y / 2.f);
+    viewRect.width = view.getSize().x;
+    viewRect.height = view.getSize().y;
+    return viewRect;
+}

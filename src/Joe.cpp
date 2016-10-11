@@ -110,16 +110,26 @@ void Joe::handleInput(const KeyBitset &pressedKeys, const MouseBitset &pressedBu
         setAndPlay(anim_find->second);
     }
 
+    auto screen = gameObj->getScreen();
+    auto view = screen->getView();
+    auto viewRect = calcViewRect(view);
+
     if (weapon.getCurrWeaponConfig()) {
         if (weapon.getCurrWeaponConfig()->type == AUTOMATIC) {
             if (im->testEvent("fire") && weapon.fire()) {
-                auto dir = getMouseDirectionFromPosition(getPosition(), gameObj->getScreen());
-                eventDispatcher.notify(make_event<FireEvent>(this, dir));
+                auto mouse = screen->mapPixelToCoords(sf::Mouse::getPosition(*screen));
+                if (viewRect.contains(mouse)) {
+                    auto dir = getMouseDirectionFromPosition(getPosition(), gameObj->getScreen());
+                    eventDispatcher.notify(make_event<FireEvent>(this, dir));
+                }
             }
         } else {
             if (pressedButtons.test(sf::Mouse::Left) && weapon.fire()) {
-                auto dir = getMouseDirectionFromPosition(getPosition(), gameObj->getScreen());
-                eventDispatcher.notify(make_event<FireEvent>(this, dir));
+                auto mouse = screen->mapPixelToCoords(sf::Mouse::getPosition(*screen));
+                if (viewRect.contains(mouse)) {
+                    auto dir = getMouseDirectionFromPosition(getPosition(), gameObj->getScreen());
+                    eventDispatcher.notify(make_event<FireEvent>(this, dir));
+                }
             }
         }
 
