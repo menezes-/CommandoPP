@@ -4,7 +4,7 @@ project(Commando)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin/${CMAKE_BUILD_TYPE}/")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin/${CMAKE_BUILD_TYPE}")
 
-set(SOURCE_FILES main.cpp src/Entity.cpp include/Entity.hpp src/Joe.cpp include/Joe.hpp include/events/Observer.hpp src/events/EventDispatcher.cpp include/events/EventDispatcher.hpp src/PlayState.cpp include/PlayState.hpp src/Weapon.cpp include/Weapon.hpp src/Bullet.cpp include/Bullet.hpp src/WeaponSystem.cpp include/WeaponSystem.hpp src/events/GameEvent.cpp include/events/GameEvent.hpp src/events/FireEvent.cpp include/events/FireEvent.hpp include/GameMath.hpp include/events/Event.hpp)
+set(SOURCE_FILES main.cpp src/Entity.cpp include/Entity.hpp src/Joe.cpp include/Joe.hpp include/events/Observer.hpp src/events/EventDispatcher.cpp include/events/EventDispatcher.hpp src/PlayState.cpp include/PlayState.hpp src/Weapon.cpp include/Weapon.hpp src/Bullet.cpp include/Bullet.hpp src/systems/WeaponSystem.cpp include/systems/WeaponSystem.hpp src/events/GameEvent.cpp include/events/GameEvent.hpp src/events/FireEvent.cpp include/events/FireEvent.hpp include/GameMath.hpp include/events/Event.hpp)
 add_executable(Commando ${SOURCE_FILES})
 
 set_target_properties(Commando PROPERTIES

@@ -1,5 +1,5 @@
 #include "PlayState.hpp"
-#include "WeaponSystem.hpp"
+#include "systems/WeaponSystem.hpp"
 #include <algorithm>
 #include <events/FireEvent.hpp>
 #include <SFML/System.hpp>
@@ -11,6 +11,7 @@ void PlayState::init() {
 
 PlayState::PlayState(cgf::Game *game)
     : game(game), joe{EntityConfig{}, eventDispatcher} {
+
     eventDispatcher.addObserver(FIRE, std::unique_ptr<Observer>(new WeaponSystem(this)));
 
 }
