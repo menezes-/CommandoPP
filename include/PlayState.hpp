@@ -39,6 +39,14 @@ private:
     Joe joe;
     cgf::Game *game;
     EventDispatcher eventDispatcher;
+
+    void centerMapOnPlayer(sf::RenderWindow *);
+
+    const sf::Vector2u idealSize{336, 600};
+
+    sf::View calcView(const sf::Vector2u &windowsize, const sf::Vector2u &designedsize);
+
+    void letterBox(cgf::Game* game);
 };
 
 
