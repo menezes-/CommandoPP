@@ -9,7 +9,7 @@ const std::array<WeaponConfig, WEAPON_COUNT> Weapon::weaponsConfig =
     {{
          {
              SEMI_AUTOMATIC, // WeaponType type
-             RPM(120), // sf::Time cooldown
+             RPM(1000), // sf::Time cooldown
              33, // int ammo_damage
              200, // int ammo_velocity
              sf::seconds(2), // int ammo_lifetime

@@ -12,6 +12,8 @@ public:
 
     void onEntityCollision(Entity &entity) override;
 
+    void onMapCollision(tmx::MapObject *mapObject) override;
+
     void handleInput(const KeyBitset &pressedKeys, const MouseBitset &pressedButtons, cgf::Game * gameObj);
 
     void update(cgf::Game *gameObj) override;

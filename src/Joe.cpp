@@ -57,6 +57,11 @@ void Joe::onEntityCollision(Entity &entity) {
 }
 
 
+void Joe::onMapCollision(tmx::MapObject *mapObject) {
+    move(-getXspeed()*0.09f, -getYspeed()*0.09f);
+}
+
+
 void Joe::handleInput(const KeyBitset &pressedKeys, const MouseBitset &pressedButtons, cgf::Game *gameObj) {
 
     if (state == DYING || state == DEAD) {

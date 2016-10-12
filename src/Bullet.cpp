@@ -1,10 +1,11 @@
 #include "Bullet.hpp"
 
+
 Bullet::Bullet(EventDispatcher &eventDispatcher,
                EntityType owner,
                const WeaponConfig &weaponConfig,
                const sf::Vector2f &direction)
-    : Entity(BULLET, EntityConfig(1, 1, weaponConfig.destroyable, true ), eventDispatcher) {
+    : Entity(BULLET, EntityConfig(1, 1, weaponConfig.destroyable, true), eventDispatcher) {
     damage = weaponConfig.ammo_damage;
     lifetime = weaponConfig.ammo_lifetime;
     this->owner = owner;
@@ -25,27 +26,33 @@ EntityType Bullet::getOwner() const {
 
 void Bullet::update(cgf::Game *gameObj) {
     static bool init_clock = false;
-
-    sf::Time elapsed;
-    if (!init_clock) {
-        elapsed = clock.restart();
-        init_clock = true;
-    } else {
-        elapsed = clock.getElapsedTime();
-    }
-
     if (state == ALIVE) {
-        if (elapsed >= lifetime) {
-            state = DYING;
-            eventDispatcher.notify(make_event<GameEvent>(this, Event::ENTITY_IS_DYING));
-            play();
-            setXspeed(0);
-            setYspeed(0);
+        sf::Time elapsed;
+        if (!init_clock) {
+            elapsed = clock.restart();
+            init_clock = true;
+        } else {
+            elapsed = clock.getElapsedTime();
         }
 
 
+        if (elapsed >= lifetime) {
+            die();
+        }
+
     }
     Entity::update(gameObj);
+}
+
+
+void Bullet::die() {
+    if(state == ALIVE) {
+        setXspeed(0);
+        setYspeed(0);
+        loseHealth(1000);
+        play();
+        setLooped(false);
+    }
 }
 
 
@@ -56,6 +63,20 @@ void Bullet::onEntityCollision(Entity &other) {
             other.loseHealth(damage);
             eventDispatcher.notify(make_event<GameEvent>(this, &other, ENTITY_SHOT_ENTITY));
         }
+    }
+
+}
+
+
+void Bullet::onMapCollision(tmx::MapObject *mapObject) {
+
+    auto vh_prop = mapObject->GetPropertyString("vh");
+    // se meu objeto não é "vh"(very high) e a bala vem "de trás" do objeto
+    // então nenhuma colisão aconteceu (atirando de cobertura)
+    if (vh_prop.empty() && getYspeed() > 0) {
+        return;
+    } else {
+        die();
     }
 
 }

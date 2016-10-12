@@ -1,10 +1,12 @@
 #include "PlayState.hpp"
 #include "systems/WeaponSystem.hpp"
-#include <algorithm>
+#include "systems/CollisionSystem.hpp"
 #include <events/FireEvent.hpp>
+#include <events/CollisionEvent.hpp>
 #include <SFML/System.hpp>
 #include <GameMath.hpp>
-#include "Debug.h"
+#include <tmx/MapLoader.h>
+#include <tmx/MapLayer.h>
 
 
 void PlayState::init() {
@@ -16,14 +18,20 @@ PlayState::PlayState(cgf::Game *game)
     : game(game), joe{EntityConfig{}, eventDispatcher}, map{"resources/levels/"} {
 
     eventDispatcher.addObserver(FIRE, std::unique_ptr<Observer>(new WeaponSystem(this)));
+    eventDispatcher.addObserver(COLLISION_EVENT, std::unique_ptr<Observer>(new CollisionSystem()));
 
     map.AddSearchPath("resources/sprites/");
 
     map.Load("level1.tmx");
 
-    joe.setPosition(50, 100);
+    auto layer = map.GetLayers()[4];
+    for (auto obj: layer.objects) {
+        if (obj.GetName() == "hero") {
+            joe.setPosition(obj.GetPosition().x, obj.GetAABB().top);
+            break;
+        }
+    }
 
-    DEBUG_MSG("Tamanho do map " << map.GetMapSize().x << " " << map.GetMapSize().y);
 }
 
 
@@ -65,11 +73,15 @@ void PlayState::handleEvents(cgf::Game *game) {
 
 void PlayState::update(cgf::Game *game) {
     auto screen = game->getScreen();
-    map.UpdateQuadTree(calcViewRect(screen->getView()));
+    auto viewRect = calcViewRect(screen->getView());
+    map.UpdateQuadTree(viewRect);
+    checkEntityMapCollision(&joe);
 
     joe.update(game);
 
     for (auto e: entities) {
+        if (e->getState() == DEAD || !viewRect.contains(e->getPosition())) continue;
+        checkEntityMapCollision(e);
         e->update(game);
     }
 }
@@ -77,10 +89,11 @@ void PlayState::update(cgf::Game *game) {
 
 void PlayState::draw(cgf::Game *game) {
     auto screen = game->getScreen();
+    auto viewRect = calcViewRect(screen->getView());
     map.Draw(*screen);
     screen->draw(joe);
     for (auto e: entities) {
-        if (e->getState() == DEAD) continue;
+        if (e->getState() == DEAD || !viewRect.contains(e->getPosition())) continue;
         screen->draw(*e);
     }
 
@@ -158,4 +171,18 @@ sf::View PlayState::calcView(const sf::Vector2u &windowsize, const sf::Vector2u 
     view.setViewport(viewport);
 
     return view;
+}
+
+
+void PlayState::checkEntityMapCollision(Entity *entity) {
+
+
+    for (auto object: map.QueryQuadTree(entity->getGlobalBounds())) {
+        // meu objeto é "collidable"?
+        if (object->GetParent() != "collision") continue;
+        if (object->GetAABB().intersects(entity->getGlobalBounds())) {
+            eventDispatcher.notify(make_event<CollisionEvent>(entity, object));
+        }
+    }
+
 }

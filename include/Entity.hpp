@@ -5,6 +5,7 @@
 #include <bitset>
 #include <utility>
 #include <SFML/Window/Keyboard.hpp>
+#include <tmx/MapObject.h>
 #include "events/EventDispatcher.hpp"
 
 enum EntityType: short {
@@ -45,6 +46,8 @@ class Entity: public cgf::Sprite {
 
 public:
     virtual void onEntityCollision(Entity &other) =0;
+
+    virtual void onMapCollision(tmx::MapObject *mapObject) =0;
 
     virtual void handleInput(const KeyBitset &pressedKeys, const MouseBitset &pressedButtons) {};
 

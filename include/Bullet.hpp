@@ -16,11 +16,13 @@ public:
 
     void onEntityCollision(Entity &other) override;
 
+    void onMapCollision(tmx::MapObject *mapObject) override;
+
 private:
     int damage;
     EntityType owner;
     sf::Time lifetime;
     sf::Clock clock;
 
-
+    void die();
 };

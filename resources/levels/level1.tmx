@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="28" height="134" tilewidth="12" tileheight="12" nextobjectid="117">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="28" height="134" tilewidth="12" tileheight="12" nextobjectid="151">
  <tileset firstgid="1" name="static_small" tilewidth="12" tileheight="12" tilecount="18" columns="6">
   <image source="../sprites/static_small.png" width="72" height="36"/>
   <tile id="10">
@@ -292,16 +292,6 @@
     <property name="collidable" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="72" x="275.375" y="852" width="11.9167" height="12.6667">
-   <properties>
-    <property name="collidable" type="bool" value="true"/>
-   </properties>
-  </object>
-  <object id="73" x="288.042" y="852" width="11.9167" height="12.6667">
-   <properties>
-    <property name="collidable" type="bool" value="true"/>
-   </properties>
-  </object>
   <object id="74" x="23.7083" y="827.333" width="11.9167" height="12.6667">
    <properties>
     <property name="collidable" type="bool" value="true"/>
@@ -312,58 +302,154 @@
     <property name="collidable" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="76" x="311.5" y="1451.5" width="24.5" height="12">
+  <object id="91" x="246.25" y="999.333" width="16.6667" height="8.16667">
    <properties>
     <property name="collidable" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="77" x="287.625" y="1463.75" width="11.375" height="35.75">
+  <object id="115" x="1.33333" y="22.6667" width="142.667" height="14">
    <properties>
     <property name="collidable" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="78" x="299.542" y="1463.92" width="11.9167" height="12.6667">
+  <object id="116" x="203.333" y="24.6667" width="134" height="11.3333">
    <properties>
     <property name="collidable" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="79" x="300" y="1487.5" width="35.25" height="12.25"/>
-  <object id="80" x="264" y="1308" width="71" height="12.25"/>
-  <object id="81" x="251.5" y="1272" width="12.25" height="35.75"/>
-  <object id="82" x="263.75" y="1260" width="57.5" height="11.75"/>
-  <object id="83" x="0.75" y="1104.25" width="71" height="11.5"/>
-  <object id="84" x="72" y="1080" width="12" height="24.75"/>
-  <object id="85" x="0.25" y="1055.75" width="60" height="12.5"/>
-  <object id="86" x="61.75" y="1068.25" width="9.75" height="11"/>
-  <object id="87" x="120" y="996" width="96" height="12"/>
-  <object id="88" x="106.5" y="1008" width="13.75" height="36.5"/>
-  <object id="89" x="215.25" y="1008.5" width="13" height="35.25"/>
-  <object id="90" x="119.75" y="1043.25" width="96.25" height="13"/>
-  <object id="91" x="240.25" y="996" width="36" height="11.5"/>
-  <object id="92" x="0.5" y="731.75" width="119.5" height="12.25"/>
-  <object id="93" x="121.25" y="744" width="22.5" height="12"/>
-  <object id="94" x="144.5" y="756" width="11.75" height="59.75"/>
-  <object id="95" x="0.25" y="768" width="143.25" height="12"/>
-  <object id="96" x="0.25" y="803.75" width="143.5" height="13"/>
-  <object id="97" x="228.25" y="731.5" width="107.5" height="12.25"/>
-  <object id="98" x="203.5" y="743.75" width="36.75" height="12"/>
-  <object id="99" x="191.75" y="756" width="12" height="60"/>
-  <object id="100" x="205.25" y="768.25" width="131.25" height="12"/>
-  <object id="101" x="204.5" y="804" width="131.5" height="12.5"/>
-  <object id="102" x="156.25" y="707.75" width="36" height="13.25"/>
-  <object id="103" x="0.25" y="684.25" width="36" height="11.75"/>
-  <object id="104" x="83.75" y="635.75" width="36.25" height="12.75"/>
-  <object id="105" x="12" y="515.5" width="36" height="13"/>
-  <object id="106" x="119" y="515.25" width="37.5" height="13"/>
-  <object id="107" x="47.75" y="419.75" width="60.5" height="13"/>
-  <object id="108" x="11.5" y="348" width="61" height="12.5"/>
-  <object id="109" x="119.5" y="287.25" width="63.75" height="13.25"/>
-  <object id="110" x="0.25" y="263.5" width="83.75" height="12.5"/>
-  <object id="111" x="252" y="239.25" width="85.75" height="13"/>
-  <object id="112" x="252.667" y="382.667" width="83.3333" height="13.3333"/>
-  <object id="113" x="264" y="516" width="35.3333" height="12.6667"/>
-  <object id="114" x="179.333" y="599.333" width="36.6667" height="14"/>
-  <object id="115" x="1.33333" y="22.6667" width="142.667" height="14"/>
-  <object id="116" x="203.333" y="24.6667" width="134" height="11.3333"/>
+  <object id="118" x="336" y="1498">
+   <properties>
+    <property name="collidable" type="bool" value="true"/>
+    <property name="vh" type="bool" value="true"/>
+   </properties>
+   <polyline points="0,0 -38.6667,-0.564815 -35.73,-33.324 -0.489451,-40.6667"/>
+  </object>
+  <object id="131" x="2.28872" y="260.257">
+   <properties>
+    <property name="collidable" type="bool" value="true"/>
+   </properties>
+   <polyline points="0,0 6.29396,1.38462 12.588,-0.923075 20.0262,2.76923 64.084,0.461539 70.378,6.92308 70.378,10.1539 70.378,13.8462 69.2336,16.1538 57.79,16.1538 45.2021,16.6154 32.6142,16.6154 26.8924,16.1538 20.0262,17.077 12.588,16.6154 3.43307,16.1538 -2.28872,16.6154 -0.572179,-0.461539"/>
+  </object>
+  <object id="132" x="125.911" y="290.433">
+   <properties>
+    <property name="collidable" type="bool" value="true"/>
+   </properties>
+   <polyline points="0,0 5.6,-7.02703 16.8,-7.02703 19.2889,-5.15315 28.6223,-8.43244 32.3556,-5.15315 48.5333,-6.0901 52.8889,-2.34234 54.1333,0.936935 54.7556,4.68469 54.7556,7.49552 43.5556,8.43244 31.7333,8.90093 24.8889,8.43244 3.11111,7.96395 -1.24444,7.96395 0.622223,1.87388 0.622223,0.468469"/>
+  </object>
+  <object id="133" x="337.333" y="251.619">
+   <properties>
+    <property name="collidable" type="bool" value="true"/>
+   </properties>
+   <polyline points="0,0 -29.2713,1.71429 -34.1498,1.14285 -50.615,0.571429 -67.6899,0.571429 -76.8372,1.14285 -78.6667,-4.57142 -73.1783,-7.42857 -76.8372,-9.71425 -71.3488,-18.2857 -0.609819,-17.7143 0,-0.571429"/>
+  </object>
+  <object id="134" x="72.0519" y="360.667">
+   <properties>
+    <property name="collidable" type="bool" value="true"/>
+   </properties>
+   <polyline points="0,0 -53.4889,0 -54.7185,-4.54545 -49.1852,-8.58583 -53.4889,-11.1111 -46.726,-16.6667 -4.91852,-16.6667 0.614815,0"/>
+  </object>
+  <object id="135" x="336.041" y="395.474">
+   <properties>
+    <property name="collidable" type="bool" value="true"/>
+   </properties>
+   <polyline points="0,0 -79.4962,0.525253 -83.374,-5.77777 -74.3257,-6.82828 -80.1425,-8.92926 -75.6183,-16.808 -0.646311,-16.2828 1.29262,0"/>
+  </object>
+  <object id="136" x="108.074" y="432">
+   <properties>
+    <property name="collidable" type="bool" value="true"/>
+   </properties>
+   <polyline points="0,0 -52.7407,-0.520833 -52.1482,-5.20833 -46.8148,-7.29166 -51.5556,-10.4166 -48.5926,-16.6666 -4.14815,-16.6666 0.592593,-0.520833"/>
+  </object>
+  <object id="137" x="43.4487" y="525.334">
+   <properties>
+    <property name="collidable" type="bool" value="true"/>
+   </properties>
+   <polyline points="0,0 -24.8077,-0.842103 -28.1154,-6.31578 -24.8077,-10.5263 -19.2948,-15.1579 -12.6795,-16 -5.51282,-15.579 -1.10256,-9.68418 -1.65385,-4.63157 0.551282,-0.842103"/>
+  </object>
+  <object id="138" x="150.807" y="526">
+   <properties>
+    <property name="collidable" type="bool" value="true"/>
+   </properties>
+   <polyline points="0,0 -23.6538,-0.87719 -26.8077,-6.57894 -23.6538,-10.9649 -18.3974,-15.7895 -12.0897,-16.6666 -5.25641,-16.2281 -1.05128,-10.0877 -1.57692,-4.82456 0.525641,-0.87719"/>
+  </object>
+  <object id="139" x="295.461" y="526">
+   <properties>
+    <property name="collidable" type="bool" value="true"/>
+   </properties>
+   <polyline points="0,0 -24.2308,-0.87719 -27.4615,-6.57894 -24.2308,-10.9649 -18.8461,-15.7895 -12.3846,-16.6666 -5.38462,-16.2281 -1.07692,-10.0877 -1.61538,-4.82456 0.538462,-0.87719"/>
+  </object>
+  <object id="140" x="207.551" y="608.667">
+   <properties>
+    <property name="collidable" type="bool" value="true"/>
+   </properties>
+   <polyline points="0,0 -20.1923,-0.947366 -22.8846,-7.10526 -20.1923,-11.8421 -15.7051,-17.0526 -10.3205,-18 -4.48718,-17.5263 -0.897434,-10.8947 -1.34615,-5.21052 0.448718,-0.947366"/>
+  </object>
+  <object id="141" x="114.154" y="644">
+   <properties>
+    <property name="collidable" type="bool" value="true"/>
+   </properties>
+   <polyline points="0,0 -23.0769,-0.912278 -26.1538,-6.8421 -23.0769,-11.4035 -17.9487,-16.421 -11.7948,-17.3333 -5.12821,-16.8772 -1.02564,-10.4912 -1.53846,-5.01754 0.512821,-0.912278"/>
+  </object>
+  <object id="142" x="30.7948" y="690.667">
+   <properties>
+    <property name="collidable" type="bool" value="true"/>
+   </properties>
+   <polyline points="0,0 -24.2308,-0.771927 -27.4615,-5.78947 -24.2308,-9.64913 -18.8461,-13.8947 -12.3846,-14.6666 -5.38462,-14.2807 -1.07692,-8.87717 -1.61538,-4.24561 0.538462,-0.771927"/>
+  </object>
+  <object id="143" x="188.115" y="720">
+   <properties>
+    <property name="collidable" type="bool" value="true"/>
+   </properties>
+   <polyline points="0,0 -24.8077,-0.947366 -28.1154,-7.10526 -24.8077,-11.8421 -19.2948,-17.0526 -12.6795,-18 -5.51282,-17.5263 -1.10256,-10.8947 -1.65385,-5.21052 0.551282,-0.947366"/>
+  </object>
+  <object id="144" x="336.081" y="1316.04">
+   <properties>
+    <property name="collidable" type="bool" value="true"/>
+    <property name="vh" type="bool" value="true"/>
+   </properties>
+   <polyline points="0,0 -55.0861,-1.25581 -70.3226,-12.5581 -72.0806,-22.6047 -66.2204,-29.5116 -69.7365,-32.0233 -66.8065,-35.7907 -69.7365,-36.4186 -70.3226,-38.9302 -66.8065,-40.1861 -65.6344,-43.3256 -65.0484,-45.2093 -52.1559,-48.9767 -42.1935,-52.7442 -20.5107,-52.7442 -5.27419,-53.3721 0.586022,-52.7442 0.586022,0.627907"/>
+  </object>
+  <object id="145" x="226.472" y="1176.19">
+   <properties>
+    <property name="collidable" type="bool" value="true"/>
+    <property name="vh" type="bool" value="true"/>
+   </properties>
+   <polyline points="0,0 41.5281,-1.14815 41.5281,-8.61111 39.5505,-14.3519 38.0674,-18.9444 31.1461,-19.5186 13.3483,-19.5186 2.96629,-17.7963 0,-17.7963 -2.47191,-5.74074 -1.48315,-4.01852 0,1.14815"/>
+  </object>
+  <object id="146" x="0.536585" y="1110.75">
+   <properties>
+    <property name="collidable" type="bool" value="true"/>
+    <property name="vh" type="bool" value="true"/>
+   </properties>
+   <polyline points="0,0 51.5122,0.586346 65.4634,-11.7269 63.8536,-15.245 64.9269,-18.7631 63.3171,-34.5943 52.0488,-43.9759 41.317,-46.9076 18.7805,-48.0804 -0.536585,-48.0804 0.536585,0"/>
+  </object>
+  <object id="147" x="189.369" y="1043.97">
+   <properties>
+    <property name="collidable" type="bool" value="true"/>
+    <property name="vh" type="bool" value="true"/>
+   </properties>
+   <polyline points="0,0 -43.8931,0 -54.4599,-8.63637 -56.8985,-6.36364 -60.1498,-6.81819 -61.3693,-9.54548 -60.1498,-11.8181 -58.1177,-12.7273 -56.0856,-16.8182 -54.8664,-21.3636 -55.2729,-24.5455 -54.4599,-30.4546 -43.0803,-36.3636 -26.8236,-38.6364 -5.28343,-38.1819 6.90908,-33.1819 11.3797,-26.3636 11.3797,-20.4545 14.631,-15.4546 14.631,-10.4545 0,1.36364"/>
+  </object>
+  <object id="148" x="335.333" y="888.324">
+   <properties>
+    <property name="collidable" type="bool" value="true"/>
+    <property name="vh" type="bool" value="true"/>
+   </properties>
+   <polyline points="0,0 -32.832,1.00901 -65.664,-0.504505 -76,-1.51351 -71.136,-7.06306 -71.136,-12.1081 -68.096,-17.6576 0,-17.6576 0,1.00901"/>
+  </object>
+  <object id="149" x="338.729" y="817.355">
+   <properties>
+    <property name="collidable" type="bool" value="true"/>
+    <property name="vh" type="bool" value="true"/>
+   </properties>
+   <polyline points="0,0 -128.345,1.31148 -132.791,0.874315 -133.427,-18.3607 -134.063,-52.0218 0.635368,-51.5847 1.27073,0"/>
+  </object>
+  <object id="150" x="1.01019" y="812.81">
+   <properties>
+    <property name="collidable" type="bool" value="true"/>
+    <property name="vh" type="bool" value="true"/>
+   </properties>
+   <polyline points="0,0 126.323,0.523457 115.144,-63.8617 62.6027,-61.2444 61.4847,-68.0494 52.5415,-69.0963 45.8341,-70.1431 36.8908,-70.1431 25.7118,-68.0494 26.2707,-63.8617 -1.67686,-60.1975 -0.558952,-1.57037"/>
+  </object>
  </objectgroup>
 </map>

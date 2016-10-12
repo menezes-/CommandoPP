@@ -5,5 +5,6 @@ enum Event: short {
     ENTITY_IS_DYING,
     ENTITY_TOOK_DAMAGE,
     ENTITY_SHOT_ENTITY,
-    FIRE
+    FIRE,
+    COLLISION_EVENT
 };

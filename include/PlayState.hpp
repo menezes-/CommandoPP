@@ -46,6 +46,8 @@ private:
 
     sf::View calcView(const sf::Vector2u &windowsize, const sf::Vector2u &designedsize);
 
+    void checkEntityMapCollision(Entity *entity);
+
 };
 
 
