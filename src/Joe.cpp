@@ -123,6 +123,7 @@ void Joe::handleInput(const KeyBitset &pressedKeys, const MouseBitset &pressedBu
             anim_find = directions.find(Dir(0, 0));
         }
         setAndPlay(anim_find->second);
+        play();
     }
 
     auto screen = gameObj->getScreen();
