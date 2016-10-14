@@ -90,10 +90,8 @@ void PlayState::draw(cgf::Game *game) {
     //map.Draw(*screen, tmx::MapLayer::DrawType::Debug, true);
     map.Draw(*screen);
     screen->draw(joe);
-    screen->draw(getOutline(joe));
     for (auto e: entities) {
         if (e->getState() == DEAD || !viewRect.contains(e->getPosition())) continue;
-        screen->draw(getOutline(*e));
         screen->draw(*e);
     }
 
