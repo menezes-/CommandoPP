@@ -3,10 +3,7 @@
 #include "systems/CollisionSystem.hpp"
 #include <events/FireEvent.hpp>
 #include <events/CollisionEvent.hpp>
-#include <SFML/System.hpp>
 #include <GameMath.hpp>
-#include <tmx/MapLoader.h>
-#include <tmx/MapLayer.h>
 
 
 void PlayState::init() {
@@ -90,10 +87,13 @@ void PlayState::update(cgf::Game *game) {
 void PlayState::draw(cgf::Game *game) {
     auto screen = game->getScreen();
     auto viewRect = calcViewRect(screen->getView());
+    //map.Draw(*screen, tmx::MapLayer::DrawType::Debug, true);
     map.Draw(*screen);
     screen->draw(joe);
+    screen->draw(getOutline(joe));
     for (auto e: entities) {
         if (e->getState() == DEAD || !viewRect.contains(e->getPosition())) continue;
+        screen->draw(getOutline(*e));
         screen->draw(*e);
     }
 
@@ -180,9 +180,28 @@ void PlayState::checkEntityMapCollision(Entity *entity) {
     for (auto object: map.QueryQuadTree(entity->getGlobalBounds())) {
         // meu objeto é "collidable"?
         if (object->GetParent() != "collision") continue;
-        if (object->GetAABB().intersects(entity->getGlobalBounds())) {
-            eventDispatcher.notify(make_event<CollisionEvent>(entity, object));
+
+        auto bbox = entity->getBoundingBox();
+        sf::FloatRect rect{sf::Vector2f{entity->getPosition().x,
+                                        entity->getPosition().y}, sf::Vector2f{bbox.width, bbox.height}};
+        sf::FloatRect overlap;
+        if (object->GetAABB().intersects(rect, overlap)) {
+            auto normal = object->GetCentre() - entity->getPosition();
+            eventDispatcher.notify(make_event<CollisionEvent>(entity, object, overlap, normal));
+
         }
+
     }
 
+}
+
+
+sf::RectangleShape PlayState::getOutline(Entity &entity) {
+    auto rect = entity.getBoundingBox();
+    auto rectangle = sf::RectangleShape{sf::Vector2f{rect.width, rect.height}};
+    rectangle.setPosition(entity.getPosition().x + rect.width / 2, entity.getPosition().y + rect.height / 2);
+    rectangle.setFillColor(sf::Color::Transparent);
+    rectangle.setOutlineColor(sf::Color::Yellow);
+    rectangle.setOutlineThickness(1);
+    return rectangle;
 }

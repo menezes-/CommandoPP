@@ -12,7 +12,12 @@ public:
 
     void onEntityCollision(Entity &entity) override;
 
-    void onMapCollision(tmx::MapObject *mapObject) override;
+    void onMapCollision(
+        tmx::MapObject *mapObject,
+        const sf::FloatRect &overlap,
+        const sf::Vector2f &collisionNormal
+
+    ) override;
 
     void handleInput(const KeyBitset &pressedKeys, const MouseBitset &pressedButtons, cgf::Game * gameObj);
 

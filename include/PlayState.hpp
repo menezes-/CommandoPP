@@ -48,6 +48,8 @@ private:
 
     void checkEntityMapCollision(Entity *entity);
 
+    sf::RectangleShape getOutline(Entity &entity);
+
 };
 
 

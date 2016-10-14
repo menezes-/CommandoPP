@@ -46,7 +46,7 @@ void Bullet::update(cgf::Game *gameObj) {
 
 
 void Bullet::die() {
-    if(state == ALIVE) {
+    if (state == ALIVE) {
         setXspeed(0);
         setYspeed(0);
         loseHealth(1000);
@@ -68,8 +68,12 @@ void Bullet::onEntityCollision(Entity &other) {
 }
 
 
-void Bullet::onMapCollision(tmx::MapObject *mapObject) {
+void Bullet::onMapCollision(
+    tmx::MapObject *mapObject,
+    const sf::FloatRect &overlap,
+    const sf::Vector2f &collisionNormal
 
+) {
     auto vh_prop = mapObject->GetPropertyString("vh");
     // se meu objeto não é "vh"(very high) e a bala vem "de trás" do objeto
     // então nenhuma colisão aconteceu (atirando de cobertura)
@@ -78,5 +82,4 @@ void Bullet::onMapCollision(tmx::MapObject *mapObject) {
     } else {
         die();
     }
-
 }

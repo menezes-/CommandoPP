@@ -57,8 +57,18 @@ void Joe::onEntityCollision(Entity &entity) {
 }
 
 
-void Joe::onMapCollision(tmx::MapObject *mapObject) {
-    move(-getXspeed()*0.09f, -getYspeed()*0.09f);
+void Joe::onMapCollision(
+    tmx::MapObject *mapObject,
+    const sf::FloatRect &overlap,
+    const sf::Vector2f &collisionNormal
+
+) {
+    //http://trederia.blogspot.com.br/2016/02/2d-physics-101-pong.html
+    auto manifold = getManifold(overlap, collisionNormal);
+
+    auto offset = sf::Vector2f(manifold.x, manifold.y) * manifold.z;
+    move(offset);
+
 }
 
 

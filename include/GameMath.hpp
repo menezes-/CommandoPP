@@ -90,6 +90,22 @@ inline sf::Vector2<Ret> operator-(const sf::Vector2<T> &v1, const sf::Vector2<U>
 };
 
 
+template <typename T> inline constexpr
+int signum(T x, std::false_type is_signed) {
+    return T(0) < x;
+}
+
+template <typename T> inline constexpr
+int signum(T x, std::true_type is_signed) {
+    return (T(0) < x) - (x < T(0));
+}
+
+template <typename T> inline constexpr
+int signum(T x) {
+    return signum(x, std::is_signed<T>());
+}
+
+
 /**
  * Retorna a direção em que um objeto precisa percorrer para interceptar um alvo na posição
  *`targetPos` com a velocidade definida por `targetVelocity`.
@@ -158,4 +174,21 @@ inline sf::FloatRect calcViewRect(const sf::View &view) {
     viewRect.width = view.getSize().x;
     viewRect.height = view.getSize().y;
     return viewRect;
+}
+
+
+inline sf::Vector3f getManifold(
+    const sf::FloatRect &overlap,
+    const sf::Vector2f &collisionNormal
+) {
+    sf::Vector3f manifold;
+    if (overlap.width < overlap.height) {
+        manifold.x = (collisionNormal.x < 0) ? 1.f : -1.f;
+        manifold.z = overlap.width;
+    } else {
+        manifold.y = (collisionNormal.y < 0) ? 1.f : -1.f;
+        manifold.z = overlap.height;
+    }
+
+    return manifold;
 }

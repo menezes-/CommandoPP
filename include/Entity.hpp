@@ -47,7 +47,12 @@ class Entity: public cgf::Sprite {
 public:
     virtual void onEntityCollision(Entity &other) =0;
 
-    virtual void onMapCollision(tmx::MapObject *mapObject) =0;
+    virtual void onMapCollision(
+        tmx::MapObject *mapObject,
+        const sf::FloatRect &overlap,
+        const sf::Vector2f &collisionNormal
+
+    ) =0;
 
     virtual void handleInput(const KeyBitset &pressedKeys, const MouseBitset &pressedButtons) {};
 
@@ -71,6 +76,8 @@ public:
 
     int getId();
 
+    sf::FloatRect getBoundingBox();
+
     virtual ~Entity() {}
 
 
@@ -92,7 +99,7 @@ protected:
 
     void setAndPlay(std::string name);
 
-    bool isEnemy(const Entity &other);
+    bool isEnemy(const Entity &other) const;
 
     /**
      * Função de utilidade que faz um load do arquivo sprites_small.png

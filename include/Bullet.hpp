@@ -16,7 +16,12 @@ public:
 
     void onEntityCollision(Entity &other) override;
 
-    void onMapCollision(tmx::MapObject *mapObject) override;
+    void onMapCollision(
+        tmx::MapObject *mapObject,
+        const sf::FloatRect &overlap,
+        const sf::Vector2f &collisionNormal
+
+    ) override;
 
 private:
     int damage;

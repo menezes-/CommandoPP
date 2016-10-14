@@ -115,7 +115,7 @@ void Entity::loadSmallSprites() {
 }
 
 
-bool Entity::isEnemy(const Entity &other) {
+bool Entity::isEnemy(const Entity &other) const {
     auto ot = other.type;
     if (other.type == BULLET) {
         auto bullet = static_cast<const Bullet &>(other);
@@ -150,6 +150,23 @@ Entity::operator std::string() const {
 
     return type_name + std::string("#") + std::to_string(id);
 
+}
+
+
+sf::FloatRect Entity::getBoundingBox() {
+    auto size = getSize();
+    auto spriteW = size.x;
+    auto spriteH = size.y;
+    sf::Vector2f pos = this->getPosition();
+    sf::Vector2f scale = this->getScale();
+
+    auto width = spriteW / 2 * scale.x;
+
+    auto height = spriteH / 2 * scale.y;
+    auto x0 = pos.x - width;
+    auto y1 = pos.y + height;
+    sf::FloatRect floatRect{x0, y1, width, height};
+    return floatRect;
 }
 
 
