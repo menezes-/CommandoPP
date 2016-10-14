@@ -77,7 +77,15 @@ void PlayState::update(cgf::Game *game) {
     joe.update(game);
 
     for (auto e: entities) {
-        if (e->getState() == DEAD || !viewRect.contains(e->getPosition())) continue;
+        if (e->getState() == DEAD) continue;
+        if (!viewRect.contains(e->getPosition())) {
+            if (e->getType() == BULLET) {
+                Bullet *b = static_cast<Bullet *>(e);
+                b->die();
+            } else {
+                continue;
+            }
+        }
         checkEntityMapCollision(e);
         e->update(game);
     }

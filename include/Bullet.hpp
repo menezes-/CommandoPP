@@ -23,11 +23,11 @@ public:
 
     ) override;
 
+    void die();
+
 private:
     int damage;
     EntityType owner;
     sf::Time lifetime;
     sf::Clock clock;
-
-    void die();
 };
