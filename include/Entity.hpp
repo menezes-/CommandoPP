@@ -80,6 +80,16 @@ public:
 
     sf::FloatRect getBoundingBox();
 
+    Entity() = default;
+
+    Entity(const Entity &copyFrom) = default;
+
+    Entity &operator=(const Entity &copyFrom) = default;
+
+    Entity(Entity &&) = default;
+
+    Entity &operator=(Entity &&) = default;
+
     virtual ~Entity() = default;
 
 

@@ -21,6 +21,16 @@ public:
 
     virtual ~GameEvent() = default;
 
+    GameEvent() = default;
+
+    GameEvent(const GameEvent &copyFrom) = default;
+
+    GameEvent &operator=(const GameEvent &copyFrom) = default;
+
+    GameEvent(GameEvent &&) = default;
+
+    GameEvent &operator=(GameEvent &&) = default;
+
 protected:
     Event event;
 
