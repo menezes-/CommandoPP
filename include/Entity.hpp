@@ -80,7 +80,7 @@ public:
 
     sf::FloatRect getBoundingBox();
 
-    virtual ~Entity() {}
+    virtual ~Entity() = default;
 
 
 protected:

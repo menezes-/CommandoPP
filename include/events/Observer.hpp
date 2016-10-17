@@ -9,7 +9,7 @@ class GameEvent;
 
 class Observer {
 public:
-    virtual ~Observer() {}
+    virtual ~Observer() = default;
 
     virtual void onNotify(const std::shared_ptr<GameEvent>& event) =0;
 

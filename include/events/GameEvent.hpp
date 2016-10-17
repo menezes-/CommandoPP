@@ -5,8 +5,6 @@
 #include "Event.hpp"
 class Entity;
 
-
-
 class GameEvent {
 public:
     GameEvent(Entity *from, Entity *target, Event event);
@@ -20,6 +18,8 @@ public:
     Entity *getFrom() const;
 
     Entity *getTarget() const;
+
+    virtual ~GameEvent() = default;
 
 protected:
     Event event;
