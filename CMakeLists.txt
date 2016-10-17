@@ -21,9 +21,11 @@ check_cxx_compiler_flag(-flto GXX_HAS_LTO_FLAG)
 message(STATUS "Suporta LTO = ${GXX_HAS_LTO_FLAG}")
 
 target_compile_options(Commando PUBLIC
-                       -Wall -Wextra -Wno-unused-function
+                       -Wall -Wextra -Wno-unused-function -Wodr
                        $<$<CONFIG:Debug>:-g -O0 >
-                       $<$<CONFIG:Release>:-g0 -O2 -s $<$<BOOL:${GXX_HAS_LTO_FLAG}>:-flto>>)
+                       $<$<CONFIG:Release>:-O2 -s $<$<BOOL:${GXX_HAS_LTO_FLAG}>:-flto>>
+                       $<$<CONFIG:RelWithDebInfo>:-g -O2 $<$<BOOL:${GXX_HAS_LTO_FLAG}>:-flto>>
+                       )
 
 add_custom_command(TARGET Commando POST_BUILD
                    COMMAND ${CMAKE_COMMAND} -E copy_directory
