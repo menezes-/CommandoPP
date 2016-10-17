@@ -70,11 +70,13 @@ public:
 
     EntityState getState() const;
 
+    void setState(EntityState state);
+
     int getLives() const;
 
     int getHealth() const;
 
-    int getId();
+    size_t getId();
 
     sf::FloatRect getBoundingBox();
 
@@ -93,9 +95,9 @@ protected:
     int health;
     EventDispatcher &eventDispatcher;
     std::string currAnimation;
-    int id;
+    std::size_t id;
     //id da entidade
-    static int s_id;
+    static std::size_t s_id;
 
     void setAndPlay(std::string name);
 

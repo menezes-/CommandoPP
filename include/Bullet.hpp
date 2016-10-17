@@ -16,6 +16,8 @@ public:
 
     void onEntityCollision(Entity &other) override;
 
+    void reuseBullet(EntityType owner, const WeaponConfig &weaponConfig, const sf::Vector2f &direction);
+
     void onMapCollision(
         tmx::MapObject *mapObject,
         const sf::FloatRect &overlap,
@@ -30,4 +32,5 @@ private:
     EntityType owner;
     sf::Time lifetime;
     sf::Clock clock;
+    bool init_clock{false};
 };

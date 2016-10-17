@@ -6,5 +6,7 @@ enum Event: short {
     ENTITY_TOOK_DAMAGE,
     ENTITY_SHOT_ENTITY,
     FIRE,
-    COLLISION_EVENT
+    COLLISION_EVENT,
+    GAME_PAUSED,
+    GAME_RESUMED
 };

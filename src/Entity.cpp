@@ -2,7 +2,7 @@
 #include <Debug.h>
 #include "Bullet.hpp"
 
-int Entity::s_id;
+std::size_t Entity::s_id;
 
 
 Entity::Entity(EntityType type,
@@ -130,7 +130,7 @@ bool Entity::isEnemy(const Entity &other) const {
 }
 
 
-int Entity::getId() {
+size_t Entity::getId() {
     return id;
 }
 
@@ -168,6 +168,11 @@ sf::FloatRect Entity::getBoundingBox() {
     auto y1 = pos.y + height;
     sf::FloatRect floatRect{x0, y1, width, height};
     return floatRect;
+}
+
+
+void Entity::setState(EntityState state) {
+    Entity::state = state;
 }
 
 

@@ -4,6 +4,8 @@
 #include <GameState.h>
 #include <tmx/MapLoader.h>
 #include "Joe.hpp"
+#include "EntityManager.hpp"
+#include "systems/CollisionSystem.hpp"
 
 
 class PlayState final: public cgf::GameState {
@@ -36,9 +38,13 @@ private:
 
     std::vector<Entity *> entities;
 
-    Joe joe;
+    Joe* joe;
     cgf::Game *game;
     EventDispatcher eventDispatcher;
+
+    CollisionSystem collisionSystem;
+
+    EntityManager entityManager;
 
     void centerMapOnPlayer(sf::RenderWindow *);
 

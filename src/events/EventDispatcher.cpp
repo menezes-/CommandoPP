@@ -3,18 +3,30 @@
 
 void EventDispatcher::notify(std::shared_ptr<GameEvent> event) {
     auto event1 = event->getEvent();
-    if (observersMap.empty())
-        return;
+
     auto search = observersMap.find(event1);
     if (search == observersMap.end()) {
         return;
     }
 
-    for (auto observer: search->second) {
-        observer->onNotify(event);
+    for (auto listener: search->second) {
+        eventQueue.emplace_back(listener, event);
     }
+
 }
 
 
 EventDispatcher::EventDispatcher()
-    : observers{}, observersMap{} {}
+    : observersMap{} {}
+
+
+void EventDispatcher::dispatchEvents() {
+
+    while (!eventQueue.empty()) {
+        auto ep = eventQueue.front();
+        ep.first->onNotify(ep.second);
+        eventQueue.pop_front();
+
+    }
+
+}

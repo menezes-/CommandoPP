@@ -6,13 +6,9 @@ Bullet::Bullet(EventDispatcher &eventDispatcher,
                const WeaponConfig &weaponConfig,
                const sf::Vector2f &direction)
     : Entity(BULLET, EntityConfig(1, 1, weaponConfig.destroyable, true), eventDispatcher) {
-    damage = weaponConfig.ammo_damage;
-    lifetime = weaponConfig.ammo_lifetime;
-    this->owner = owner;
 
-    setXspeed(direction.x * weaponConfig.ammo_velocity);
-    setYspeed(direction.y * weaponConfig.ammo_velocity);
-
+    reuseBullet(owner, weaponConfig, direction);
+    //state = EntityState::DEAD;
     loadSmallSprites();
     setFrameRange(129, 132);
 
@@ -25,15 +21,13 @@ EntityType Bullet::getOwner() const {
 
 
 void Bullet::update(cgf::Game *gameObj) {
-    static bool init_clock = false;
     if (state == ALIVE) {
         sf::Time elapsed;
         if (!init_clock) {
-            elapsed = clock.restart();
+            clock.restart();
             init_clock = true;
-        } else {
-            elapsed = clock.getElapsedTime();
         }
+        elapsed = clock.getElapsedTime();
 
 
         if (elapsed >= lifetime) {
@@ -82,4 +76,19 @@ void Bullet::onMapCollision(
     } else {
         die();
     }
+}
+
+
+void Bullet::reuseBullet(EntityType owner, const WeaponConfig &weaponConfig, const sf::Vector2f &direction) {
+
+    damage = weaponConfig.ammo_damage;
+    lifetime = weaponConfig.ammo_lifetime;
+    this->owner = owner;
+
+    setXspeed(direction.x * weaponConfig.ammo_velocity);
+    setYspeed(direction.y * weaponConfig.ammo_velocity);
+    state = EntityState::ALIVE;
+    config.godMode = weaponConfig.destroyable;
+    init_clock = false;
+
 }

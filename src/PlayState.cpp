@@ -1,9 +1,9 @@
 #include "PlayState.hpp"
-#include "systems/WeaponSystem.hpp"
 #include "systems/CollisionSystem.hpp"
 #include <events/FireEvent.hpp>
 #include <events/CollisionEvent.hpp>
 #include <GameMath.hpp>
+#include <Debug.h>
 
 
 void PlayState::init() {
@@ -12,10 +12,14 @@ void PlayState::init() {
 
 
 PlayState::PlayState(cgf::Game *game)
-    : game(game), joe{EntityConfig{}, eventDispatcher}, map{"resources/levels/"} {
+    : game(game), map{"resources/levels/"}, entityManager{},
+      collisionSystem{} {
 
-    eventDispatcher.addObserver(std::unique_ptr<Observer>(new WeaponSystem(this)), FIRE, ENTITY_IS_DEAD);
-    eventDispatcher.addObserver(std::unique_ptr<Observer>(new CollisionSystem()), COLLISION_EVENT);
+    joe = entityManager.makeEntity<Joe>(EntityConfig{}, eventDispatcher);
+    entityManager.setEventDispatcher(&eventDispatcher);
+    eventDispatcher.addObserver(&collisionSystem, COLLISION_EVENT);
+    eventDispatcher.addObserver(&entityManager, Event::FIRE, Event::ENTITY_IS_DEAD, Event::GAME_PAUSED);
+    entityManager.generateBullets(entityManager.bulletCacheSize);
 
     map.AddSearchPath("resources/sprites/");
 
@@ -24,7 +28,7 @@ PlayState::PlayState(cgf::Game *game)
     auto layer = map.GetLayers()[4];
     for (auto obj: layer.objects) {
         if (obj.GetName() == "hero") {
-            joe.setPosition(obj.GetPosition().x, obj.GetAABB().top);
+            joe->setPosition(obj.GetPosition().x, obj.GetAABB().top);
             break;
         }
     }
@@ -59,11 +63,11 @@ void PlayState::handleEvents(cgf::Game *game) {
 
     if (keyBitset.test(sf::Keyboard::LShift)) {
 
-        eventDispatcher.notify(make_event<FireEvent>(sf::Vector2f{0, 0}, &joe, Weapon::weaponsConfig[MACHINE_GUN]));
+        eventDispatcher.notify(make_event<FireEvent>(sf::Vector2f{0, 0}, joe, Weapon::weaponsConfig[MACHINE_GUN]));
 
     }
 
-    joe.handleInput(keyBitset, buttonBitset, game);
+    joe->handleInput(keyBitset, buttonBitset, game);
     centerMapOnPlayer(screen);
 }
 
@@ -72,20 +76,10 @@ void PlayState::update(cgf::Game *game) {
     auto screen = game->getScreen();
     auto viewRect = calcViewRect(screen->getView());
     map.UpdateQuadTree(viewRect);
-    checkEntityMapCollision(&joe);
+    eventDispatcher.dispatchEvents();
+    entityManager.update(viewRect);
 
-    joe.update(game);
-
-    for (auto e: entities) {
-        if (e->getState() == DEAD) continue;
-        if (!viewRect.contains(e->getPosition())) {
-            if (e->getType() == BULLET) {
-                Bullet *b = static_cast<Bullet *>(e);
-                b->die();
-            } else {
-                continue;
-            }
-        }
+    for (auto e: entityManager) {
         checkEntityMapCollision(e);
         e->update(game);
     }
@@ -94,12 +88,9 @@ void PlayState::update(cgf::Game *game) {
 
 void PlayState::draw(cgf::Game *game) {
     auto screen = game->getScreen();
-    auto viewRect = calcViewRect(screen->getView());
     //map.Draw(*screen, tmx::MapLayer::DrawType::Debug, true);
     map.Draw(*screen);
-    screen->draw(joe);
-    for (auto e: entities) {
-        if (e->getState() == DEAD || !viewRect.contains(e->getPosition())) continue;
+    for (auto e: entityManager) {
         screen->draw(*e);
     }
 
@@ -137,7 +128,7 @@ void PlayState::centerMapOnPlayer(sf::RenderWindow *screen) {
     sf::Vector2f viewsize = view.getSize();
     viewsize.x /= 2;
     viewsize.y /= 2;
-    sf::Vector2f pos = joe.getPosition();
+    sf::Vector2f pos = joe->getPosition();
 
     float panX = viewsize.x; // minimum pan
     if (pos.x >= viewsize.x)
