@@ -1,9 +1,15 @@
 #include "systems/WeaponSystem.hpp"
 #include "events/FireEvent.hpp"
+#include <Debug.h>
 
 
 void WeaponSystem::onNotify(const std::shared_ptr<GameEvent>& event) {
+    if(event->getEvent() == ENTITY_IS_DEAD){
+        DEBUG_MSG("entity is dead");
+    }
+
     if (event->getEvent() != FIRE) return;
+
     const FireEvent *fire_event = static_cast<const FireEvent *>(event.get());
 
     // tiro que vem do nada, normalmente usado para teste

@@ -14,8 +14,8 @@ void PlayState::init() {
 PlayState::PlayState(cgf::Game *game)
     : game(game), joe{EntityConfig{}, eventDispatcher}, map{"resources/levels/"} {
 
-    eventDispatcher.addObserver(FIRE, std::unique_ptr<Observer>(new WeaponSystem(this)));
-    eventDispatcher.addObserver(COLLISION_EVENT, std::unique_ptr<Observer>(new CollisionSystem()));
+    eventDispatcher.addObserver(std::unique_ptr<Observer>(new WeaponSystem(this)), FIRE, ENTITY_IS_DEAD);
+    eventDispatcher.addObserver(std::unique_ptr<Observer>(new CollisionSystem()), COLLISION_EVENT);
 
     map.AddSearchPath("resources/sprites/");
 

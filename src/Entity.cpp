@@ -30,7 +30,7 @@ void Entity::update(cgf::Game *gameObj) {
             if (isVisible()) {
                 setVisible(false);
             }
-            eventDispatcher.notify(make_event<GameEvent>(this, ENTITY_IS_DEAD));
+
             break;
             /*
              * Case Fallthroug.
@@ -42,9 +42,10 @@ void Entity::update(cgf::Game *gameObj) {
         case DYING:
             if (isStopped()) { // terminei de tocar a animação de morte ?
                 state = DEAD;
+                eventDispatcher.notify(make_event<GameEvent>(this, ENTITY_IS_DEAD));
                 return; // vou para o estado de morto e termino o update
             }
-        default: // se eu não estou no estado "DYING" OU eu ESTOU no estado "DYING" E a animção de morte NÃO terminou
+        default: // se eu não estou no estado "DYING" OU eu ESTOU no estado "DYING" E a animação de morte NÃO terminou
             auto delta = gameObj->getUpdateInterval();
             cgf::Sprite::update(delta, config.movable);
             break;
