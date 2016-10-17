@@ -3,7 +3,6 @@
 #include <events/FireEvent.hpp>
 #include <events/CollisionEvent.hpp>
 #include <GameMath.hpp>
-#include <Debug.h>
 
 
 void PlayState::init() {
@@ -94,16 +93,6 @@ void PlayState::draw(cgf::Game *game) {
         screen->draw(*e);
     }
 
-}
-
-
-void PlayState::addEntity(Entity *entity) {
-    entities.push_back(entity);
-}
-
-
-void PlayState::removeEntity(Entity *entity) {
-    entities.erase(std::remove(entities.begin(), entities.end(), entity), entities.end());
 }
 
 

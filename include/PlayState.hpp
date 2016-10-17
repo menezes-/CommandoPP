@@ -20,10 +20,6 @@ public:
 
     PlayState(cgf::Game *game);
 
-    void addEntity(Entity *entity);
-
-    void removeEntity(Entity *entity);
-
 private:
     void cleanup() override;
 
@@ -35,8 +31,6 @@ private:
     MouseBitset buttonBitset;
 
     tmx::MapLoader map;
-
-    std::vector<Entity *> entities;
 
     Joe* joe;
     cgf::Game *game;
