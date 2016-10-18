@@ -73,11 +73,6 @@ void Joe::onMapCollision(
 
 
 void Joe::handleInput(const KeyBitset &pressedKeys, const MouseBitset &pressedButtons, cgf::Game *gameObj) {
-
-    if (state == DYING || state == DEAD) {
-        return;
-    }
-
     static auto im = cgf::InputManager::instance();
 
     int dirx = 0;
