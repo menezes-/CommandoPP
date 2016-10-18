@@ -26,7 +26,7 @@ public:
     void die() override;
 
 private:
-    std::map<Dir, std::string> directions;
+    std::map<Dir, std::string> directionAnimation;
     Weapon weapon;
 };
 

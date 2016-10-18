@@ -17,7 +17,7 @@ Joe::Joe(EntityConfig config, EventDispatcher &eventDispatcher)
     loadSmallSprites();
     loadAnimation("resources/animations/joe.xml");
 
-    directions = {{Dir(0, 0), "Up"}, //default
+    directionAnimation = {{Dir(0, 0), "Up"}, //default
                   {Dir(0, -1), "Up"},
                   {Dir(1, -1), "RightUp"},
                   {Dir(1, 0), "Right"},
@@ -27,7 +27,7 @@ Joe::Joe(EntityConfig config, EventDispatcher &eventDispatcher)
                   {Dir(-1, 0), "Left"},
                   {Dir(-1, -1), "LeftUp"}};
 
-    currAnimation = directions[Dir(0, 0)];
+    currAnimation = directionAnimation[Dir(0, 0)];
     setAnimation(currAnimation);
     setAnimRate(15);
 
@@ -112,11 +112,11 @@ void Joe::handleInput(const KeyBitset &pressedKeys, const MouseBitset &pressedBu
         setAndPlay("");
     } else {
         auto pair = Dir(dirx, diry);
-        auto anim_find = directions.find(pair);
-        if (anim_find == directions.end()) {
+        auto anim_find = directionAnimation.find(pair);
+        if (anim_find == directionAnimation.end()) {
             DEBUG_MSG("direção " << dirx << ", " << diry << " não encontrada!");
             // vai pra animação default
-            anim_find = directions.find(Dir(0, 0));
+            anim_find = directionAnimation.find(Dir(0, 0));
         }
         setAndPlay(anim_find->second);
         play();
