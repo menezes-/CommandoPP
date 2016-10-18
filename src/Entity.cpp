@@ -39,7 +39,6 @@ void Entity::update(cgf::Game *gameObj) {
              * estado DYING e ir pro estado DEAD, por isso o uso do Case Fallthrough.
              *
              */
-            9+8;
         case DYING:
             if (isStopped()) { // terminei de tocar a animação de morte ?
                 state = DEAD;
@@ -139,7 +138,7 @@ bool Entity::isEnemy(const Entity &other) const {
 }
 
 
-size_t Entity::getId() const {
+std::size_t Entity::getId() const {
     return id;
 }
 
