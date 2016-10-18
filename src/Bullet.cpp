@@ -42,10 +42,9 @@ void Bullet::die() {
     if (state == ALIVE) {
         setXspeed(0);
         setYspeed(0);
-        state = DYING;
-        eventDispatcher.notify(make_event<GameEvent>(this, Event::ENTITY_IS_DYING));
         play();
         setLooped(false);
+        Entity::die();
     }
 }
 
@@ -55,6 +54,7 @@ void Bullet::onEntityCollision(Entity &other) {
     if (isEnemy(other)) {
         if (!other.getConfig().godMode) {
             other.loseHealth(damage);
+            die();
             eventDispatcher.notify(make_event<GameEvent>(this, &other, ENTITY_SHOT_ENTITY));
         }
     }
@@ -88,7 +88,7 @@ void Bullet::reuseBullet(EntityType owner, const WeaponConfig &weaponConfig, con
     setXspeed(direction.x * weaponConfig.ammo_velocity);
     setYspeed(direction.y * weaponConfig.ammo_velocity);
     state = EntityState::ALIVE;
-    config.godMode = weaponConfig.destroyable;
+    config.godMode = !weaponConfig.destroyable;
     init_clock = false;
     if (weaponConfig.destroyable) {
         setFrameRange(123, 128);

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="28" height="134" tilewidth="12" tileheight="12" nextobjectid="182">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="28" height="134" tilewidth="12" tileheight="12" nextobjectid="186">
  <tileset firstgid="1" name="static_small" tilewidth="12" tileheight="12" tilecount="18" columns="6">
   <image source="../sprites/static_small.png" width="72" height="36"/>
   <tile id="10">
@@ -448,6 +448,24 @@
   <object id="180" x="200.667" y="740" width="10" height="74">
    <properties>
     <property name="collidable" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="182" x="0.666667" y="1604" width="334.667" height="4">
+   <properties>
+    <property name="collidable" type="bool" value="true"/>
+    <property name="vh" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="183" x="327.333" y="1.33333" width="15.3333" height="1606.67">
+   <properties>
+    <property name="collidable" type="bool" value="true"/>
+    <property name="vh" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="184" x="-15.3333" y="1.33333" width="24" height="1605.33">
+   <properties>
+    <property name="collidable" type="bool" value="true"/>
+    <property name="vh" type="bool" value="true"/>
    </properties>
   </object>
  </objectgroup>

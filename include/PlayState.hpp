@@ -50,6 +50,8 @@ private:
 
     sf::RectangleShape getOutline(Entity &entity);
 
+    void computeEntityCollision();
+
 };
 
 

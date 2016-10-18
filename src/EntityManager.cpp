@@ -93,7 +93,7 @@ void EntityManager::update(const sf::FloatRect &viewRect) {
             continue;
         }
         if (!viewRect.contains(entity->getPosition())) {
-            if (entity->getType() == BULLET ) {
+            if (entity->getType() == BULLET) {
                 Bullet *b = static_cast<Bullet *>(entity.get());
                 b->die();
             }
@@ -105,3 +105,6 @@ void EntityManager::update(const sf::FloatRect &viewRect) {
 }
 
 
+std::size_t EntityManager::size() const {
+    return alive.size();
+}

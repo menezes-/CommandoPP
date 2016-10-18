@@ -25,7 +25,7 @@ public:
 
     ) override;
 
-    void die();
+    void die() override;
 
 private:
     int damage;

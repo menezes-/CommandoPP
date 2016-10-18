@@ -9,7 +9,7 @@ Entity::Entity(EntityType type,
                EntityConfig config,
                EventDispatcher &eventDispatcher)
     : type{type}, config(config), health{config.health}, lives{config.lives},
-      eventDispatcher{eventDispatcher}, id{++s_id} {}
+      eventDispatcher{eventDispatcher}, id{s_id++} {}
 
 
 const EntityConfig &Entity::getConfig() const {
@@ -39,6 +39,7 @@ void Entity::update(cgf::Game *gameObj) {
              * estado DYING e ir pro estado DEAD, por isso o uso do Case Fallthrough.
              *
              */
+            9+8;
         case DYING:
             if (isStopped()) { // terminei de tocar a animação de morte ?
                 state = DEAD;
@@ -65,10 +66,10 @@ void Entity::loseHealth(int amount) {
     DEBUG_MSG("Entidade perdeu " << amount << " de vida ficou com " << health);
     if (health <= 0) {
         --lives;
-        state = DYING;
-        eventDispatcher.notify(make_event<GameEvent>(this, Event::ENTITY_IS_DYING));
-        health = config.health;
-
+        if (lives > 0) {
+            health = config.health;
+        }
+        die();
     } else {
         eventDispatcher.notify(make_event<GameEvent>(this, Event::ENTITY_TOOK_DAMAGE));
     }
@@ -118,19 +119,27 @@ void Entity::loadSmallSprites() {
 
 bool Entity::isEnemy(const Entity &other) const {
     auto ot = other.type;
+    auto myt = type;
+    if (myt == BULLET) {
+        auto bptr = static_cast<const Bullet *>(this);
+        myt = bptr->getOwner();
+    }
     if (other.type == BULLET) {
         auto bullet = static_cast<const Bullet &>(other);
         ot = bullet.getOwner();
     }
 
-    if (type == JOE && ot != JOE) {
+    if (myt == JOE && ot != JOE) {
         return true;
-    } else return type != JOE && ot == JOE;
+    } else if (myt == DUDE && ot != DUDE) {
+        return true;
+    }
+    return false;
 
 }
 
 
-size_t Entity::getId() {
+size_t Entity::getId() const {
     return id;
 }
 
@@ -173,6 +182,12 @@ sf::FloatRect Entity::getBoundingBox() {
 
 void Entity::setState(EntityState state) {
     Entity::state = state;
+}
+
+
+void Entity::die() {
+    state = DYING;
+    eventDispatcher.notify(make_event<GameEvent>(this, Event::ENTITY_IS_DYING));
 }
 
 

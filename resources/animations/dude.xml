@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Format:
+name   => name of the animation sequence
+start  => starting frame
+end    => ending frame
+loop   => looping animation (default)
+-->
+<animation name="joe">
+    <sequence name="Up" start="45" end="47" loop="true"/>
+    <sequence name="RightUp" start="48" end="50" loop="true"/>
+    <sequence name="Right" start="51" end="53" loop="true"/>
+    <sequence name="RightDown" start="54" end="56" loop="true"/>
+    <sequence name="Down" start="57" end="59" loop="true"/>
+    <sequence name="LeftDown" start="60" end="62" loop="true"/>
+    <sequence name="Left" start="63" end="65" loop="true"/>
+    <sequence name="LeftUp" start="66" end="68" loop="true"/>
+    <sequence name="Die" start="69" end="70" loop="false"/>
+</animation>

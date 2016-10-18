@@ -60,7 +60,7 @@ void PlayState::handleEvents(cgf::Game *game) {
     }
 
     if (keyBitset.test(sf::Keyboard::LShift)) {
-        eventDispatcher.notify(make_event<FireEvent>(joe->getPosition() + sf::Vector2f(100, -100),
+        eventDispatcher.notify(make_event<FireEvent>(joe->getPosition() + sf::Vector2f(0, -200),
                                                      joe,
                                                      Weapon::weaponsConfig[MACHINE_GUN]));
 
@@ -77,6 +77,7 @@ void PlayState::update(cgf::Game *game) {
     map.UpdateQuadTree(viewRect);
     eventDispatcher.dispatchEvents();
     entityManager.update(viewRect);
+    computeEntityCollision();
 
     for (auto e: entityManager) {
         checkEntityMapCollision(e);
@@ -160,6 +161,22 @@ sf::View PlayState::calcView(const sf::Vector2u &windowsize, const sf::Vector2u 
 }
 
 
+void PlayState::computeEntityCollision() {
+
+    for (auto x: entityManager) {
+        for (auto y: entityManager) {
+            if (x == y) continue;
+            if (x->getState() != ALIVE || y->getState() != ALIVE) continue;
+            if (x->isEnemy(*y) && x->bboxCollision(*y)) {
+                eventDispatcher.notify(make_event<CollisionEvent>(x, y));
+
+            }
+        }
+    }
+
+}
+
+
 void PlayState::checkEntityMapCollision(Entity *entity) {
 
 
@@ -168,8 +185,9 @@ void PlayState::checkEntityMapCollision(Entity *entity) {
         if (object->GetParent() != "collision") continue;
 
         auto bbox = entity->getBoundingBox();
-        sf::FloatRect rect{sf::Vector2f{entity->getPosition().x + rect.width / 2,
-                                        entity->getPosition().y + rect.height / 2}, sf::Vector2f{bbox.width, bbox.height}};
+        sf::FloatRect rect{sf::Vector2f{entity->getPosition().x,
+                                        entity->getPosition().y},
+                           sf::Vector2f{bbox.width, bbox.height}};
         sf::FloatRect overlap;
         if (object->GetAABB().intersects(rect, overlap)) {
             auto normal = object->GetCentre() - entity->getPosition();

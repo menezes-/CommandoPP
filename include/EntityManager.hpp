@@ -29,6 +29,8 @@ public:
 
     void update(const sf::FloatRect& viewRect);
 
+    std::size_t size() const;
+
     iterator begin() { return alive.begin(); }
 
     iterator end() { return alive.end(); }

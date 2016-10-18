@@ -19,11 +19,11 @@ public:
 
     ) override;
 
-    void handleInput(const KeyBitset &pressedKeys, const MouseBitset &pressedButtons, cgf::Game * gameObj);
+    void handleInput(const KeyBitset &pressedKeys, const MouseBitset &pressedButtons, cgf::Game *gameObj);
 
-    void update(cgf::Game *gameObj) override;
+    Weapon &getWeapon();
 
-    Weapon & getWeapon();
+    void die() override;
 
 private:
     std::map<Dir, std::string> directions;

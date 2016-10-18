@@ -58,6 +58,8 @@ public:
 
     virtual void update(cgf::Game *gameObj);
 
+    virtual void die();
+
     virtual operator std::string() const;
 
     const EntityConfig &getConfig() const;
@@ -76,7 +78,9 @@ public:
 
     int getHealth() const;
 
-    size_t getId();
+    std::size_t getId() const;
+
+    bool isEnemy(const Entity &other) const;
 
     sf::FloatRect getBoundingBox();
 
@@ -111,13 +115,9 @@ protected:
 
     void setAndPlay(std::string name);
 
-    bool isEnemy(const Entity &other) const;
-
     /**
      * Função de utilidade que faz um load do arquivo sprites_small.png
      */
     void loadSmallSprites();
 
 };
-
-

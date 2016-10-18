@@ -73,6 +73,7 @@ void Joe::onMapCollision(
 
 
 void Joe::handleInput(const KeyBitset &pressedKeys, const MouseBitset &pressedButtons, cgf::Game *gameObj) {
+    if (state != ALIVE) return;
     static auto im = cgf::InputManager::instance();
 
     int dirx = 0;
@@ -152,18 +153,14 @@ void Joe::handleInput(const KeyBitset &pressedKeys, const MouseBitset &pressedBu
 }
 
 
-void Joe::update(cgf::Game *gameObj) {
-
-    if (state == DYING && currAnimation != "Die") {
-        setAndPlay("Die");
-        setAnimRate(2);
-
-    }
-
-    Entity::update(gameObj);
+Weapon &Joe::getWeapon() {
+    return weapon;
 }
 
 
-Weapon &Joe::getWeapon() {
-    return weapon;
+void Joe::die() {
+    setAndPlay("Die");
+    setAnimRate(5);
+
+    Entity::die();
 }
