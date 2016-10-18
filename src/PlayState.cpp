@@ -1,5 +1,4 @@
 #include "PlayState.hpp"
-#include "systems/CollisionSystem.hpp"
 #include <events/FireEvent.hpp>
 #include <events/CollisionEvent.hpp>
 #include <GameMath.hpp>
@@ -16,7 +15,7 @@ PlayState::PlayState(cgf::Game *game)
 
     joe = entityManager.makeEntity<Joe>(EntityConfig{}, eventDispatcher);
     entityManager.setEventDispatcher(&eventDispatcher);
-    eventDispatcher.addObserver(&collisionSystem, COLLISION_EVENT);
+    eventDispatcher.addObserver(&collisionSystem, Event::COLLISION_EVENT);
     eventDispatcher.addObserver(&entityManager, Event::FIRE, Event::ENTITY_IS_DEAD, Event::GAME_PAUSED);
     entityManager.generateBullets(entityManager.bulletCacheSize);
 
