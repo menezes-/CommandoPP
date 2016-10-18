@@ -169,8 +169,8 @@ void PlayState::checkEntityMapCollision(Entity *entity) {
         if (object->GetParent() != "collision") continue;
 
         auto bbox = entity->getBoundingBox();
-        sf::FloatRect rect{sf::Vector2f{entity->getPosition().x,
-                                        entity->getPosition().y}, sf::Vector2f{bbox.width, bbox.height}};
+        sf::FloatRect rect{sf::Vector2f{entity->getPosition().x + rect.width / 2,
+                                        entity->getPosition().y + rect.height / 2}, sf::Vector2f{bbox.width, bbox.height}};
         sf::FloatRect overlap;
         if (object->GetAABB().intersects(rect, overlap)) {
             auto normal = object->GetCentre() - entity->getPosition();
