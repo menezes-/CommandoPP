@@ -61,8 +61,9 @@ void PlayState::handleEvents(cgf::Game *game) {
     }
 
     if (keyBitset.test(sf::Keyboard::LShift)) {
-
-        eventDispatcher.notify(make_event<FireEvent>(sf::Vector2f{0, 0}, joe, Weapon::weaponsConfig[MACHINE_GUN]));
+        eventDispatcher.notify(make_event<FireEvent>(joe->getPosition() + sf::Vector2f(100, -100),
+                                                     joe,
+                                                     Weapon::weaponsConfig[MACHINE_GUN]));
 
     }
 
