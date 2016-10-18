@@ -10,7 +10,6 @@ Bullet::Bullet(EventDispatcher &eventDispatcher,
     reuseBullet(owner, weaponConfig, direction);
     //state = EntityState::DEAD;
     loadSmallSprites();
-    setFrameRange(129, 132);
 
 }
 
@@ -43,7 +42,8 @@ void Bullet::die() {
     if (state == ALIVE) {
         setXspeed(0);
         setYspeed(0);
-        loseHealth(1000);
+        state = DYING;
+        eventDispatcher.notify(make_event<GameEvent>(this, Event::ENTITY_IS_DYING));
         play();
         setLooped(false);
     }
@@ -90,5 +90,11 @@ void Bullet::reuseBullet(EntityType owner, const WeaponConfig &weaponConfig, con
     state = EntityState::ALIVE;
     config.godMode = weaponConfig.destroyable;
     init_clock = false;
+    if (weaponConfig.destroyable) {
+        setFrameRange(123, 128);
+    } else {
+        setFrameRange(129, 132);
+    }
+    setLooped(false);
 
 }

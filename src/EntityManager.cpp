@@ -63,9 +63,7 @@ void EntityManager::fireEvent(const std::shared_ptr<GameEvent> &event) {
     Bullet *bullet = bulletCache.front();
     bulletCache.pop_front();
 
-    if (fire_event->getFrom()) {
-        bullet->setPosition(fire_event->getFrom()->getPosition());
-    }
+    bullet->setPosition(fire_event->getPosition());
 
     bullet->reuseBullet(type, fire_event->getWeaponConfig(), fire_event->getDirection());
 
