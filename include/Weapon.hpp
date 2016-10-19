@@ -64,6 +64,8 @@ public:
      */
     bool fire();
 
+    void reload();
+
     const WeaponConfig *getCurrWeaponConfig() const;
 
     const WeaponConfig *getWeaponConfig(Weapons weapon) const;
@@ -83,7 +85,6 @@ private:
 
     int currMagazineSize; // quantas balas no pente
     sf::Time timeToNextShot;
-    bool needReload{false};
     const WeaponConfig *config{nullptr};
     sf::Clock clock;
     State state{READY};

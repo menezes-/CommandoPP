@@ -119,6 +119,10 @@ void Joe::handleInput(const KeyBitset &pressedKeys, const MouseBitset &pressedBu
         }
     }
 
+    if(pressedKeys.test(sf::Keyboard::R)){
+        weapon.reload();
+    }
+
     // se andando na diagonal a velocidade é menor
     if (dirx != 0 && diry != 0) {
         speed *= 0.85;

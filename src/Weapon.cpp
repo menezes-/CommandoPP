@@ -93,15 +93,22 @@ bool Weapon::fire() {
             return true;
 
         } else {
-            DEBUG_MSG("Reloading");
-            state = RELOADING;
-            timeToNextShot = config->reloadTime[config->type];
-            clock.restart();
+            reload();
             return false;
         }
     }
     return false;
 
+}
+
+
+void Weapon::reload() {
+    if (state != RELOADING) {
+        DEBUG_MSG("Reloading");
+        state = RELOADING;
+        timeToNextShot = config->reloadTime[config->type];
+        clock.restart();
+    }
 }
 
 
@@ -147,3 +154,4 @@ void Weapon::setNoWeapon() {
 Weapons Weapon::getCurrWeapon() const {
     return currWeapon;
 }
+
