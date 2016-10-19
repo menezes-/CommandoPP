@@ -133,6 +133,7 @@ bool Weapon::setWeapon(Weapons weapon) {
     config = &weaponsConfig[weapon];
     currWeapon = weapon;
     currMagazineSize = config->magazineSize;
+    timeToNextShot = sf::Time{};
     return true;
 
 }
