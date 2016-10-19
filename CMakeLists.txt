@@ -21,10 +21,10 @@ check_cxx_compiler_flag(-flto GXX_HAS_LTO_FLAG)
 message(STATUS "Suporta LTO = ${GXX_HAS_LTO_FLAG}")
 
 target_compile_options(Commando PUBLIC
-                       -Wall -Wextra -Wno-unused-function -Wodr
+                       -Wall -Wextra -Wno-unused-function -Wodr -m64
                        $<$<CONFIG:Debug>:-g -O0 >
-                       $<$<CONFIG:Release>:-O2 -s $<$<BOOL:${GXX_HAS_LTO_FLAG}>:-flto>>
-                       $<$<CONFIG:RelWithDebInfo>:-g -O2 $<$<BOOL:${GXX_HAS_LTO_FLAG}>:-flto>>
+                       $<$<CONFIG:Release>:-O2 -s -msse3 $<$<BOOL:${GXX_HAS_LTO_FLAG}>:-flto>>
+                       $<$<CONFIG:RelWithDebInfo>:-g -O2 -msse3 $<$<BOOL:${GXX_HAS_LTO_FLAG}>:-flto>>
                        )
 
 add_custom_command(TARGET Commando POST_BUILD
