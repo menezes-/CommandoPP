@@ -180,6 +180,8 @@ Weapon &Joe::getWeapon() {
 
 
 void Joe::die() {
+    setXspeed(0);
+    setYspeed(0);
     setAndPlay("Die");
     setAnimRate(5);
 
