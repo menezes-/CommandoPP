@@ -11,7 +11,7 @@ const std::array<WeaponConfig, WEAPON_COUNT> Weapon::weaponsConfig =
              SEMI_AUTOMATIC, // WeaponType type
              RPM(1000), // sf::Time cooldown
              33, // int ammo_damage
-             200, // int ammo_velocity
+             300, // int ammo_velocity
              sf::seconds(2), // int ammo_lifetime
              false, // bool destroyable
              13 // short magazineSize
@@ -23,27 +23,27 @@ const std::array<WeaponConfig, WEAPON_COUNT> Weapon::weaponsConfig =
              RPM(1000),
              25,
              300,
-             sf::seconds(2),
+             sf::seconds(1),
              false,
              50
          },
 
 
          {
-             PUMP_ACTION, // WeaponType type
-             RPM(30), // sf::Time cooldown
+             SEMI_AUTOMATIC, // WeaponType type
+             RPM(1000), // sf::Time cooldown
              100, // int ammo_damage
-             100, // int ammo_velocity
-             sf::milliseconds(500), // int ammo_lifetime
+             150, // int ammo_velocity
+             sf::seconds(1), // int ammo_lifetime
              false, // bool destroyable
              4 // short magazineSize
          },
 
          {
              PUMP_ACTION, // WeaponType type
-             RPM(5), // sf::Time cooldown
+             RPM(50), // sf::Time cooldown
              1000,
-             50,
+             110,
              sf::seconds(10), // int ammo_lifetime
              true, // bool destroyable
              1 // short magazineSize
@@ -125,6 +125,7 @@ bool Weapon::setWeapon(Weapons weapon) {
 
     config = &weaponsConfig[weapon];
     currWeapon = weapon;
+    currMagazineSize = config->magazineSize;
     return true;
 
 }
