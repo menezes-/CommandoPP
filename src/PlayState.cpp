@@ -45,7 +45,9 @@ void PlayState::handleEvents(cgf::Game *game) {
                 game->quit();
                 return;
             case sf::Event::KeyPressed:
-                keyBitset.set(event.key.code);
+                if (event.key.code != sf::Keyboard::Unknown) {
+                    keyBitset.set(event.key.code);
+                }
                 break;
             case sf::Event::MouseButtonPressed:
                 buttonBitset.set(event.mouseButton.button);
@@ -88,11 +90,16 @@ void PlayState::update(cgf::Game *game) {
 
 void PlayState::draw(cgf::Game *game) {
     auto screen = game->getScreen();
+    auto currView = screen->getView();
     //map.Draw(*screen, tmx::MapLayer::DrawType::Debug, true);
     map.Draw(*screen);
     for (auto e: entityManager) {
         screen->draw(*e);
     }
+
+    screen->setView(HUDView);
+    //hud.draw(screen);
+    screen->setView(currView);
 
 }
 
@@ -156,7 +163,7 @@ sf::View PlayState::calcView(const sf::Vector2u &windowsize, const sf::Vector2u 
 
     sf::View view(sf::FloatRect(0, 0, designedsize.x, designedsize.y));
     view.setViewport(viewport);
-
+    HUDView = view;
     return view;
 }
 
