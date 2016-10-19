@@ -53,7 +53,7 @@ const std::array<WeaponConfig, WEAPON_COUNT> Weapon::weaponsConfig =
 
 
 Weapon::Weapon(Entity *owner, EventDispatcher &eventDispatcher, Weapons weapon)
-    : owner{owner}, eventDispatcher{eventDispatcher} {
+    : owner{owner}, eventDispatcher{eventDispatcher}, currWeapon{weapon} {
     config = &weaponsConfig[weapon];
     if (config) {
         currMagazineSize = config->magazineSize;
@@ -73,13 +73,13 @@ bool Weapon::fire() {
         elapsed = clock.getElapsedTime();
     }
     bool fire = false;
-    if(elapsed >= timeToNextShot){
-        if(state == State::RELOADING){
+    if (elapsed >= timeToNextShot) {
+        if (state == State::RELOADING) {
             state = READY;
             currMagazineSize = config->magazineSize;
         }
         fire = true;
-        if(config->type == PUMP_ACTION){
+        if (config->type == PUMP_ACTION) {
             timeToNextShot = config->reloadTime[config->type];
             state = RELOADING;
         } else {
@@ -87,8 +87,8 @@ bool Weapon::fire() {
         }
     }
 
-    if(fire){
-        if (currMagazineSize-- > 0){
+    if (fire) {
+        if (currMagazineSize-- > 0) {
             clock.restart();
             return true;
 
@@ -124,6 +124,7 @@ bool Weapon::setWeapon(Weapons weapon) {
     }
 
     config = &weaponsConfig[weapon];
+    currWeapon = weapon;
     return true;
 
 }
@@ -139,4 +140,9 @@ bool Weapon::hasWeapon(Weapons weapon) const {
 void Weapon::setNoWeapon() {
     config = nullptr;
 
+}
+
+
+Weapons Weapon::getCurrWeapon() const {
+    return currWeapon;
 }

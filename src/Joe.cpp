@@ -18,14 +18,14 @@ Joe::Joe(EntityConfig config, EventDispatcher &eventDispatcher)
     loadAnimation("resources/animations/joe.xml");
 
     directionAnimation = {{Dir(0, 0), "Up"}, //default
-                  {Dir(0, -1), "Up"},
-                  {Dir(1, -1), "RightUp"},
-                  {Dir(1, 0), "Right"},
-                  {Dir(1, 1), "RightDown"},
-                  {Dir(0, 1), "Down"},
-                  {Dir(-1, 1), "LeftDown"},
-                  {Dir(-1, 0), "Left"},
-                  {Dir(-1, -1), "LeftUp"}};
+                          {Dir(0, -1), "Up"},
+                          {Dir(1, -1), "RightUp"},
+                          {Dir(1, 0), "Right"},
+                          {Dir(1, 1), "RightDown"},
+                          {Dir(0, 1), "Down"},
+                          {Dir(-1, 1), "LeftDown"},
+                          {Dir(-1, 0), "Left"},
+                          {Dir(-1, -1), "LeftUp"}};
 
     currAnimation = directionAnimation[Dir(0, 0)];
     setAnimation(currAnimation);
@@ -101,6 +101,23 @@ void Joe::handleInput(const KeyBitset &pressedKeys, const MouseBitset &pressedBu
         loseHealth(config.health / 2);
     }
 #endif
+
+
+    auto weaponSelectionKyes =
+        std::array<sf::Keyboard::Key, Weapons::WEAPON_COUNT>{
+            {
+                sf::Keyboard::Num1,
+                sf::Keyboard::Num2,
+                sf::Keyboard::Num3,
+                sf::Keyboard::Num4,
+            }};
+
+    for (std::size_t i = 0; i < weaponSelectionKyes.size(); ++i) {
+        const auto wea = static_cast<Weapons >(i);
+        if (pressedKeys.test(weaponSelectionKyes[i]) && weapon.getCurrWeapon() != wea && weapon.hasWeapon(wea)) {
+            weapon.setWeapon(wea);
+        }
+    }
 
     // se andando na diagonal a velocidade é menor
     if (dirx != 0 && diry != 0) {

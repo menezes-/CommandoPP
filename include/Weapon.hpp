@@ -68,6 +68,8 @@ public:
 
     const WeaponConfig *getWeaponConfig(Weapons weapon) const;
 
+    Weapons getCurrWeapon() const;
+
     bool hasWeapon(Weapons weapon) const;
 
     bool setWeapon(Weapons weapon);
@@ -85,6 +87,7 @@ private:
     const WeaponConfig *config{nullptr};
     sf::Clock clock;
     State state{READY};
+    Weapons currWeapon;
 
 
 };
