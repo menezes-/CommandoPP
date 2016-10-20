@@ -169,14 +169,19 @@ sf::View PlayState::calcView(const sf::Vector2u &windowsize, const sf::Vector2u 
 
 
 void PlayState::computeEntityCollision() {
+    auto size = entityManager.size();
+    std::vector<char> passados(size * size);
 
     for (auto x: entityManager) {
         for (auto y: entityManager) {
             if (x == y) continue;
             if (x->getState() != ALIVE || y->getState() != ALIVE) continue;
+            auto pIndex = x->getId() * y->getId() + size;
+            if (passados[pIndex] == 'Y') continue;
+
             if (x->isEnemy(*y) && x->bboxCollision(*y)) {
                 eventDispatcher.notify(make_event<CollisionEvent>(x, y));
-
+                passados[pIndex] = 'Y';
             }
         }
     }
