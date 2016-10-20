@@ -24,8 +24,6 @@ private:
                                                                     {3, 1},
                                                                     {0, 1},
                                                                 }};
-
-    sf::RectangleShape wBack;
     sf::Font font;
     sf::Text livesText;
     sf::Text healthText;

@@ -6,16 +6,13 @@ HUD::HUD(const EntityManager &entityManager)
 
     font.loadFromFile("resources/fonts/minecraft_evenings.otf");
     iconTexture.loadFromFile("resources/sprites/pixel_icons_by_oceansdream.png");
-    wBack.setSize(sf::Vector2f{spriteWidth, spriteHeight});
-    wBack.setPosition(0, 0);
-    wBack.setFillColor(sf::Color(146, 141, 154, 0xB3));
     livesText.setFont(font);
-    livesText.setCharacterSize(14);
+    livesText.setCharacterSize(20);
     livesText.setPosition(spriteWidth + 2, 0);
-    livesText.setFillColor(sf::Color(255, 255, 255, 0xB3));
-    healthText.setFont(font);
-    healthText.setCharacterSize(14);
-    healthText.setFillColor(sf::Color(255, 255, 255, 0xB3));
+    livesText.setFillColor(sf::Color(255, 255, 255));
+    healthText.setFont(*livesText.getFont());
+    healthText.setCharacterSize(livesText.getCharacterSize());
+    healthText.setFillColor(livesText.getFillColor());
 
 }
 
@@ -28,8 +25,6 @@ void HUD::draw(sf::RenderWindow *window) {
         weaponSprite = sf::Sprite{iconTexture, rect};
         currWeapon = currWeapon1;
     }
-
-    window->draw(wBack);
     window->draw(weaponSprite);
     window->draw(livesText);
     window->draw(healthText);

@@ -152,7 +152,7 @@ void PlayState::centerMapOnPlayer(sf::RenderWindow *screen) {
 
 
 sf::View PlayState::calcView(const sf::Vector2u &windowsize, const sf::Vector2u &designedsize) {
-    sf::FloatRect viewport(0.f, 0.f, 1.f, 1.f);
+    sf::FloatRect viewport(0.f, 0.f, 1.f, .96f);
 
     float screenwidth = windowsize.x / static_cast<float>(designedsize.x);
     float screenheight = windowsize.y / static_cast<float>(designedsize.y);
@@ -166,8 +166,10 @@ sf::View PlayState::calcView(const sf::Vector2u &windowsize, const sf::Vector2u 
     }
 
     sf::View view(sf::FloatRect(0, 0, designedsize.x, designedsize.y));
-    view.setViewport(viewport);
     HUDView = view;
+    HUDView.setViewport(viewport);
+    viewport.top += 0.04f;
+    view.setViewport(viewport);
     return view;
 }
 
