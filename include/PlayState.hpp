@@ -29,7 +29,7 @@ private:
     void resume() override;
 
     KeyBitset keyBitset;
-    MouseBitset buttonBitset;
+    MouseBitset mouseBitset;
 
     tmx::MapLoader map;
 
@@ -55,4 +55,6 @@ private:
 
     sf::View HUDView;
     HUD hud;
+
+    bool isPaused{false};
 };

@@ -5,7 +5,7 @@
 
 class HUD {
 public:
-    HUD(const EntityManager &entityManager);
+    HUD(const EntityManager &entityManager, const bool &pauseObserver);
 
     void draw(sf::RenderWindow *window);
 
@@ -27,6 +27,7 @@ private:
     sf::Font font;
     sf::Text livesText;
     sf::Text healthText;
-
-
+    sf::Text pausedText;
+    const bool& pauseObserver;
+    sf::Clock pausedClock;
 };

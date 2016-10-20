@@ -11,9 +11,6 @@ void EntityManager::onNotify(const std::shared_ptr<GameEvent> &event) {
         case Event::FIRE:
             fireEvent(event);
             break;
-        case Event::GAME_PAUSED:
-            gamePauseEvent(event);
-            break;
         default:
             break;
     }

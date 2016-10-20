@@ -11,12 +11,12 @@ void PlayState::init() {
 
 PlayState::PlayState(cgf::Game *game)
     : game(game), map{"resources/levels/"}, entityManager{&eventDispatcher},
-      collisionSystem{}, hud(entityManager) {
+      collisionSystem{}, hud(entityManager, isPaused) {
 
     joe = entityManager.getJoe();
     entityManager.setEventDispatcher(&eventDispatcher);
     eventDispatcher.addObserver(&collisionSystem, Event::COLLISION_EVENT);
-    eventDispatcher.addObserver(&entityManager, Event::FIRE, Event::ENTITY_IS_DEAD, Event::GAME_PAUSED);
+    eventDispatcher.addObserver(&entityManager, Event::FIRE, Event::ENTITY_IS_DEAD);
     entityManager.generateBullets(entityManager.bulletCacheSize);
     map.AddSearchPath("resources/sprites/");
 
@@ -41,7 +41,7 @@ void PlayState::handleEvents(cgf::Game *game) {
     auto screen = game->getScreen();
     sf::Event event;
     keyBitset.reset();
-    buttonBitset.reset();
+    mouseBitset.reset();
     while (screen->pollEvent(event)) {
         switch (event.type) {
             case sf::Event::Closed:
@@ -53,15 +53,26 @@ void PlayState::handleEvents(cgf::Game *game) {
                 }
                 break;
             case sf::Event::MouseButtonPressed:
-                buttonBitset.set(event.mouseButton.button);
+                mouseBitset.set(event.mouseButton.button);
                 break;
             case sf::Event::Resized:
                 screen->setView(calcView(sf::Vector2u(event.size.width, event.size.height), idealSize));
+                if (isPaused) {
+                    centerMapOnPlayer(screen);
+                }
                 break;
             default:
                 break;
         }
 
+    }
+
+    if (keyBitset.test(sf::Keyboard::P)) {
+        isPaused = !isPaused;
+    }
+
+    if (isPaused) {
+        return;
     }
 
     if (keyBitset.test(sf::Keyboard::LShift)) {
@@ -71,12 +82,15 @@ void PlayState::handleEvents(cgf::Game *game) {
 
     }
 
-    joe->handleInput(keyBitset, buttonBitset, game);
+    joe->handleInput(keyBitset, mouseBitset, game);
     centerMapOnPlayer(screen);
 }
 
 
 void PlayState::update(cgf::Game *game) {
+    if (isPaused) {
+        return;
+    }
     auto screen = game->getScreen();
     auto viewRect = calcViewRect(screen->getView());
     map.UpdateQuadTree(viewRect);
