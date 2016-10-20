@@ -21,7 +21,12 @@ void EntityManager::onNotify(const std::shared_ptr<GameEvent> &event) {
 }
 
 
-EntityManager::EntityManager() {}
+EntityManager::EntityManager(EventDispatcher *eventDispatcher) {
+    auto entity = std::unique_ptr<Entity>(new Joe(EntityConfig{}, *eventDispatcher));
+    Joe *e_ptr = static_cast<Joe *>(entity.get());
+    entities.push_back(std::move(entity));
+    joe = e_ptr;
+}
 
 
 void EntityManager::generateBullets(std::size_t count) {
@@ -107,4 +112,9 @@ void EntityManager::update(const sf::FloatRect &viewRect) {
 
 std::size_t EntityManager::size() const {
     return alive.size();
+}
+
+
+Joe *EntityManager::getJoe() const {
+    return joe;
 }

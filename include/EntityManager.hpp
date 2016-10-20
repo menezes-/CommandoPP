@@ -6,6 +6,7 @@
 #include <set>
 #include <Game.h>
 #include "Bullet.hpp"
+#include "Joe.hpp"
 
 class EntityManager final: public Observer {
     using alive_t = std::set<Entity *>;
@@ -15,11 +16,29 @@ public:
 
     void onNotify(const std::shared_ptr<GameEvent> &event) override;
 
-    EntityManager();
+    /**
+     * Constroi o entity manager e constroi o Joe
+     * @param eventDispatcher eventDispatcher necessário para construir o objeto Joe
+     */
+    EntityManager(EventDispatcher *eventDispatcher);
 
+    /**
+     * Gera `count` balas e as coloca no cache
+     * @param count número de balas a ser geradas
+     */
     void generateBullets(std::size_t count);
 
-    template<class T, class... P>
+    /**
+     * Função factory que constroí uma entidade (derivada de Entity) com os parametros do construtor
+     * especificados em `params`
+     * @tparam T Classe derivada de Entity
+     * @tparam P Parametros do construtor da classe derivada
+     * @param params Parametros do construtor da classe derivada
+     * @return ponteiro para entidade criada
+     */
+    template<
+        class T,
+        class... P>
     inline T *makeEntity(P &&... params) {
         auto entity = std::unique_ptr<Entity>(new T(std::forward<P>(params)...));
         T *e_ptr = static_cast<T *>(entity.get());
@@ -27,7 +46,9 @@ public:
         return e_ptr;
     }
 
-    void update(const sf::FloatRect& viewRect);
+    void update(const sf::FloatRect &viewRect);
+
+    Joe *getJoe() const;
 
     std::size_t size() const;
 
@@ -55,5 +76,7 @@ private:
     void entityIsDeadEvent(const std::shared_ptr<GameEvent> &event);
 
     void gamePauseEvent(const std::shared_ptr<GameEvent> &event);
+
+    Joe *joe;
 
 };

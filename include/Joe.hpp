@@ -24,7 +24,7 @@ public:
     Weapon &getWeapon();
 
     void die() override;
-
+    friend class HUD;
 private:
     std::map<Dir, std::string> directionAnimation;
     Weapon weapon;

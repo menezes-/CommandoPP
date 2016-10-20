@@ -10,15 +10,14 @@ void PlayState::init() {
 
 
 PlayState::PlayState(cgf::Game *game)
-    : game(game), map{"resources/levels/"}, entityManager{},
-      collisionSystem{} {
+    : game(game), map{"resources/levels/"}, entityManager{&eventDispatcher},
+      collisionSystem{}, hud(entityManager) {
 
-    joe = entityManager.makeEntity<Joe>(EntityConfig{}, eventDispatcher);
+    joe = entityManager.getJoe();
     entityManager.setEventDispatcher(&eventDispatcher);
     eventDispatcher.addObserver(&collisionSystem, Event::COLLISION_EVENT);
     eventDispatcher.addObserver(&entityManager, Event::FIRE, Event::ENTITY_IS_DEAD, Event::GAME_PAUSED);
     entityManager.generateBullets(entityManager.bulletCacheSize);
-
     map.AddSearchPath("resources/sprites/");
 
     map.Load("level1.tmx");
@@ -80,6 +79,7 @@ void PlayState::update(cgf::Game *game) {
     eventDispatcher.dispatchEvents();
     entityManager.update(viewRect);
     computeEntityCollision();
+    hud.update();
 
     for (auto e: entityManager) {
         checkEntityMapCollision(e);
@@ -98,7 +98,7 @@ void PlayState::draw(cgf::Game *game) {
     }
 
     screen->setView(HUDView);
-    //hud.draw(screen);
+    hud.draw(screen);
     screen->setView(currView);
 
 }

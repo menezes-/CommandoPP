@@ -3,6 +3,7 @@
 #include <vector>
 #include <GameState.h>
 #include <tmx/MapLoader.h>
+#include "HUD.hpp"
 #include "Joe.hpp"
 #include "EntityManager.hpp"
 #include "systems/CollisionSystem.hpp"
@@ -52,6 +53,6 @@ private:
 
     void computeEntityCollision();
 
+    sf::View HUDView;
+    HUD hud;
 };
-
-
