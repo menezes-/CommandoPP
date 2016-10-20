@@ -23,7 +23,7 @@ PlayState::PlayState(cgf::Game *game)
     map.Load("level1.tmx");
 
     for (auto &layer : map.GetLayers()) {
-        if (layer.name == std::string{"objects"}) {
+        if (layer.name == "objects") {
             for (auto obj: layer.objects) {
                 if (obj.GetName() == "hero") {
                     joe->setPosition(obj.GetPosition().x, obj.GetAABB().top);
