@@ -7,9 +7,9 @@ Bullet::Bullet(EventDispatcher &eventDispatcher,
                const sf::Vector2f &direction)
     : Entity(BULLET, EntityConfig(1, 1, weaponConfig.destroyable, true), eventDispatcher) {
 
+    loadSmallSprites();
     reuseBullet(owner, weaponConfig, direction);
     //state = EntityState::DEAD;
-    loadSmallSprites();
 
 }
 
