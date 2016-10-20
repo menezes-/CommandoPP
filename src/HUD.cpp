@@ -11,12 +11,11 @@ HUD::HUD(const EntityManager &entityManager)
     wBack.setFillColor(sf::Color(146, 141, 154, 0xB3));
     livesText.setFont(font);
     livesText.setCharacterSize(14);
-    livesText.setPosition(spriteWidth * 2, 0);
+    livesText.setPosition(spriteWidth + 2, 0);
     livesText.setFillColor(sf::Color(255, 255, 255, 0xB3));
     healthText.setFont(font);
     healthText.setCharacterSize(14);
     healthText.setFillColor(sf::Color(255, 255, 255, 0xB3));
-
 
 }
 
