@@ -22,10 +22,14 @@ PlayState::PlayState(cgf::Game *game)
 
     map.Load("level1.tmx");
 
-    auto layer = map.GetLayers()[4];
-    for (auto obj: layer.objects) {
-        if (obj.GetName() == "hero") {
-            joe->setPosition(obj.GetPosition().x, obj.GetAABB().top);
+    for (auto &layer : map.GetLayers()) {
+        if (layer.name == std::string{"objects"}) {
+            for (auto obj: layer.objects) {
+                if (obj.GetName() == "hero") {
+                    joe->setPosition(obj.GetPosition().x, obj.GetAABB().top);
+                    break;
+                }
+            }
             break;
         }
     }
@@ -78,11 +82,11 @@ void PlayState::update(cgf::Game *game) {
     map.UpdateQuadTree(viewRect);
     eventDispatcher.dispatchEvents();
     entityManager.update(viewRect);
+    computeEntityMapCollision();
     computeEntityCollision();
     hud.update();
 
     for (auto e: entityManager) {
-        checkEntityMapCollision(e);
         e->update(game);
     }
 }
@@ -189,24 +193,26 @@ void PlayState::computeEntityCollision() {
 }
 
 
-void PlayState::checkEntityMapCollision(Entity *entity) {
+void PlayState::computeEntityMapCollision() {
 
 
-    for (auto object: map.QueryQuadTree(entity->getGlobalBounds())) {
-        // meu objeto é "collidable"?
-        if (object->GetParent() != "collision") continue;
+    for (auto entity: entityManager) {
+        for (auto object: map.QueryQuadTree(entity->getGlobalBounds())) {
+            // meu objeto é "collidable"?
+            if (object->GetParent() != "collision") continue;
 
-        auto bbox = entity->getBoundingBox();
-        sf::FloatRect rect{sf::Vector2f{entity->getPosition().x,
-                                        entity->getPosition().y},
-                           sf::Vector2f{bbox.width, bbox.height}};
-        sf::FloatRect overlap;
-        if (object->GetAABB().intersects(rect, overlap)) {
-            auto normal = object->GetCentre() - entity->getPosition();
-            eventDispatcher.notify(make_event<CollisionEvent>(entity, object, overlap, normal));
+            auto bbox = entity->getBoundingBox();
+            sf::FloatRect rect{sf::Vector2f{entity->getPosition().x,
+                                            entity->getPosition().y},
+                               sf::Vector2f{bbox.width, bbox.height}};
+            sf::FloatRect overlap;
+            if (object->GetAABB().intersects(rect, overlap)) {
+                auto normal = object->GetCentre() - entity->getPosition();
+                eventDispatcher.notify(make_event<CollisionEvent>(entity, object, overlap, normal));
+
+            }
 
         }
-
     }
 
 }
