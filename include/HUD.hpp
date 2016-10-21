@@ -18,6 +18,7 @@ private:
     sf::Sprite weaponSprite;
     static constexpr int spriteWidth{24};
     static constexpr int spriteHeight{24};
+    static constexpr float healthTextMargin{10};
     std::array<sf::Vector2i, Weapons::WEAPON_COUNT> weaponSpriteIndex{{
                                                                     {0, 0},
                                                                     {2, 3},
