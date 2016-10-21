@@ -61,6 +61,18 @@ void PlayState::handleEvents(cgf::Game *game) {
                     centerMapOnPlayer(screen);
                 }
                 break;
+            case sf::Event::LostFocus:
+                if(!isPaused) {
+                    pausedByUser = false;
+                    pause();
+                }
+                break;
+            case sf::Event::GainedFocus:
+                if(!pausedByUser) {
+                    pausedByUser = true;
+                    resume();
+                }
+                break;
             default:
                 break;
         }
@@ -69,6 +81,7 @@ void PlayState::handleEvents(cgf::Game *game) {
 
     if (keyBitset.test(sf::Keyboard::P)) {
         if (!isPaused) {
+            pausedByUser = true;
             pause();
         } else {
             resume();

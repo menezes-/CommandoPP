@@ -57,4 +57,9 @@ private:
     HUD hud;
 
     bool isPaused{false};
+
+    // indica se o jogo foi pausado pelo usuário
+    // se foi pausado pelo usuário ao receber o evento de GainedFocus
+    // não "despausa" o jogo.
+    bool pausedByUser{true};
 };
