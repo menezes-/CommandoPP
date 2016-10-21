@@ -68,7 +68,11 @@ void PlayState::handleEvents(cgf::Game *game) {
     }
 
     if (keyBitset.test(sf::Keyboard::P)) {
-        isPaused = !isPaused;
+        if (!isPaused) {
+            pause();
+        } else {
+            resume();
+        }
     }
 
     if (isPaused) {
@@ -128,12 +132,15 @@ void PlayState::cleanup() {
 
 
 void PlayState::pause() {
-
+    if (!isPaused) {
+        isPaused = true;
+        hud.resetPausedClock();
+    }
 }
 
 
 void PlayState::resume() {
-
+    isPaused = false;
 }
 
 
@@ -146,18 +153,22 @@ void PlayState::centerMapOnPlayer(sf::RenderWindow *screen) {
     sf::Vector2f pos = joe->getPosition();
 
     float panX = viewsize.x; // minimum pan
-    if (pos.x >= viewsize.x)
+    if (pos.x >= viewsize.x) {
         panX = pos.x;
+    }
 
-    if (panX >= mapsize.x - viewsize.x)
+    if (panX >= mapsize.x - viewsize.x) {
         panX = mapsize.x - viewsize.x;
+    }
 
     float panY = viewsize.y; // minimum pan
-    if (pos.y >= viewsize.y)
+    if (pos.y >= viewsize.y) {
         panY = pos.y;
+    }
 
-    if (panY >= mapsize.y - viewsize.y)
+    if (panY >= mapsize.y - viewsize.y) {
         panY = mapsize.y - viewsize.y;
+    }
 
     sf::Vector2f center(panX, panY);
     view.setCenter(center);

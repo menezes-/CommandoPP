@@ -11,6 +11,8 @@ public:
 
     void update();
 
+    void resetPausedClock();
+
 private:
     sf::Texture iconTexture;
     const Joe& joe;

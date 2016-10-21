@@ -28,6 +28,7 @@ HUD::HUD(const EntityManager &entityManager, const bool &pauseObserver)
     pausedText.setCharacterSize(livesText.getCharacterSize());
     pausedText.setFillColor(livesText.getFillColor());
     pausedText.setString("Game Paused");
+    pausedText.setPosition(xPos, 0);
 
 }
 
@@ -66,3 +67,7 @@ void HUD::update() {
 }
 
 
+void HUD::resetPausedClock() {
+    pausedClock.restart();
+
+}
