@@ -37,9 +37,18 @@ RespawnSystem::RespawnSystem(const EntityManager &entityManager)
 void RespawnSystem::respawn() {
     if (joe.getLives() > 0) {
 
-        // ordenação descendente
+        /*
+         * Os mapas são verticais de maneira que ao caminhar para a frente o jogador vai em direção
+         * ao y = 0. A ideia é que o jogador renaça no ponto de respawn mais adiante considerando a posição
+         * ATUAL dele. Outra maneira de pensar é: ponto de respawn mais proximo de onde o jogado morreu.
+         * Primeiramente o array é ordenado de maneira ascendente (ou seja os pontos de respawn mais avançados aparecem
+         * primeiro).
+         * Depois é escolhido o primeiro ponto de respawn cujo Y é MAIOR que o Y atual do jogador. Como o array esta
+         * ordenado do mais avançado para o menos o jogador é colocado no ponto de respawn mais avançado e mais proximo
+         * pelo qual ele já passou.
+         */
         std::sort(respawnPoints.begin(), respawnPoints.end(), [](const tmx::MapObject *a, const tmx::MapObject *b) {
-            return b->GetCentre().y > a->GetCentre().y;
+            return a->GetCentre().y < b->GetCentre().y;
         });
         auto jy = joe.getPosition().y;
         auto result =
