@@ -8,5 +8,6 @@ enum Event: short {
     FIRE,
     COLLISION_EVENT,
     MAP_OBJECT_IN_VIEW,
-    GAME_OVER
+    GAME_OVER,
+    PLAY_SOUND
 };
