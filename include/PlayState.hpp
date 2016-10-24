@@ -34,7 +34,7 @@ private:
 
     tmx::MapLoader map;
 
-    Joe* joe;
+    Joe *joe;
     cgf::Game *game;
     EventDispatcher eventDispatcher;
 
@@ -44,15 +44,17 @@ private:
 
     void centerMapOnPlayer(sf::RenderWindow *);
 
-    const sf::Vector2u idealSize{336, 600};
+    const sf::Vector2u idealSize{336, 336};
 
     sf::View calcView(const sf::Vector2u &windowsize, const sf::Vector2u &designedsize);
 
     void computeEntityMapCollision();
 
-    sf::RectangleShape getOutline(Entity &entity);
-
     void computeEntityCollision();
+
+    void computeObjectsInView(const sf::FloatRect &viewRect);
+
+    sf::RectangleShape getOutline(Entity &entity);
 
     sf::View HUDView;
     HUD hud;
@@ -64,14 +66,5 @@ private:
     // não "despausa" o jogo.
     bool pausedByUser{true};
 
-    /*
-     * inicialmente objects seria um vetor "indexado" pelo id dos objetos
-     * porém de acordo com a documentação do formato tmx, se um objeto é deletado do mapa
-     * o id que ele continha nunca mais é utilizado, o que cria a possibilidade de buracos na
-     * sequência de IDs. Além disso a descrição do formato não indica em lugar nenhum que o id tem que ser
-     * numérco
-     * http://doc.mapeditor.org/reference/tmx-map-format/#object
-     */
-    std::unordered_map<std::string, tmx::MapObject*> objects;
-    std::unordered_map<std::string, bool> objectsInView;
+    std::unordered_map<const tmx::MapObject *, bool> objectsInView;
 };

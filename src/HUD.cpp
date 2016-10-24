@@ -8,7 +8,7 @@ HUD::HUD(const EntityManager &entityManager, const bool &pauseObserver)
     iconTexture.loadFromFile("resources/sprites/pixel_icons_by_oceansdream.png");
 
     livesText.setFont(font);
-    livesText.setCharacterSize(20);
+    livesText.setCharacterSize(14);
     livesText.setFillColor(sf::Color(255, 255, 255));
     healthText.setFont(*livesText.getFont());
     healthText.setCharacterSize(livesText.getCharacterSize());
@@ -21,7 +21,7 @@ HUD::HUD(const EntityManager &entityManager, const bool &pauseObserver)
     auto totalWidth =
         spriteWidth + healthText.getLocalBounds().width + healthTextMargin + livesText.getLocalBounds().width;
     auto center = 336.0f / 2;
-    auto xPos = totalWidth - center / 2;
+    auto xPos = center - totalWidth/2;
     livesText.setPosition(xPos, 0);
 
     pausedText.setFont(*livesText.getFont());

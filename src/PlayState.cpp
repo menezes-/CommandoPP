@@ -3,6 +3,7 @@
 #include <events/CollisionEvent.hpp>
 #include <GameMath.hpp>
 #include <cstdlib>
+#include <events/MObjectInView.hpp>
 
 
 void PlayState::init() {
@@ -27,17 +28,15 @@ PlayState::PlayState(cgf::Game *game)
     for (auto &layer : map.GetLayers()) {
         if (layer.name == "objects") {
             auto objSize = layer.objects.size();
-            objects.reserve(objSize);
+            objectsInView.reserve(objSize);
             for (auto &obj: layer.objects) {
-                auto strId = obj.GetId();
                 if (obj.GetName() == "hero" && !joeIniPos) {
                     joe->setPosition(obj.GetPosition().x, obj.GetAABB().top);
                     // só por precaução
                     joeIniPos = true;
                 }
-                if(objects.find(strId) != objects.end()){
-                    objects.insert(std::make_pair(strId, &obj));
-                }
+
+                objectsInView.insert(std::make_pair(&obj, false));
 
             }
             break;
@@ -124,6 +123,7 @@ void PlayState::update(cgf::Game *game) {
     eventDispatcher.dispatchEvents();
     entityManager.update(viewRect);
     computeEntityMapCollision();
+    computeObjectsInView(viewRect);
     computeEntityCollision();
     hud.update();
 
@@ -265,6 +265,24 @@ void PlayState::computeEntityMapCollision() {
         }
     }
 
+}
+
+
+void PlayState::computeObjectsInView(const sf::FloatRect &viewRect) {
+    for(auto& obj: objectsInView){
+        auto mapObject = obj.first;
+        if(viewRect.contains(mapObject->GetCentre())){
+            if(!obj.second){
+                eventDispatcher.notify(make_event<MObjectInView>(mapObject));
+                obj.second = true;
+            }
+
+        } else {
+            if(obj.second){
+                obj.second = false;
+            }
+        }
+    }
 }
 
 
