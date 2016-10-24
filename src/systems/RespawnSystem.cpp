@@ -55,7 +55,7 @@ void RespawnSystem::respawn() {
 
         joe.setVisible(true);
         joe.setState(EntityState::ALIVE);
-        joe.play();
+        joe.setAndPlay("Up");
     }
 
 }

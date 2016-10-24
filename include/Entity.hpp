@@ -84,6 +84,8 @@ public:
 
     sf::FloatRect getBoundingBox();
 
+    void setAndPlay(std::string name);
+
     Entity() = default;
 
     Entity(const Entity &copyFrom) = default;
@@ -112,8 +114,6 @@ protected:
     std::size_t id;
     //id da entidade
     static std::size_t s_id;
-
-    void setAndPlay(std::string name);
 
     /**
      * Função de utilidade que faz um load do arquivo sprites_small.png
