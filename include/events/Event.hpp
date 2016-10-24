@@ -7,5 +7,6 @@ enum Event: short {
     ENTITY_SHOT_ENTITY,
     FIRE,
     COLLISION_EVENT,
-    MAP_OBJECT_IN_VIEW
+    MAP_OBJECT_IN_VIEW,
+    GAME_OVER
 };

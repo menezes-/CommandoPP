@@ -7,6 +7,7 @@
 #include "Joe.hpp"
 #include "EntityManager.hpp"
 #include "systems/CollisionSystem.hpp"
+#include "systems/RespawnSystem.hpp"
 #include "tmx/MapObject.h"
 #include <unordered_map>
 
@@ -34,13 +35,14 @@ private:
 
     tmx::MapLoader map;
 
-    Joe *joe;
     cgf::Game *game;
     EventDispatcher eventDispatcher;
 
     CollisionSystem collisionSystem;
-
+    Joe *joe;
     EntityManager entityManager;
+
+    RespawnSystem respawnSystem;
 
     void centerMapOnPlayer(sf::RenderWindow *);
 

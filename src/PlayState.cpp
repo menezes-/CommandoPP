@@ -13,12 +13,13 @@ void PlayState::init() {
 
 PlayState::PlayState(cgf::Game *game)
     : game(game), map{"resources/levels/"}, entityManager{&eventDispatcher},
-      collisionSystem{}, hud(entityManager, isPaused) {
+      collisionSystem{}, hud(entityManager, isPaused), respawnSystem{entityManager} {
 
     joe = entityManager.getJoe();
     entityManager.setEventDispatcher(&eventDispatcher);
     eventDispatcher.addObserver(&collisionSystem, Event::COLLISION_EVENT);
     eventDispatcher.addObserver(&entityManager, Event::FIRE, Event::ENTITY_IS_DEAD);
+    eventDispatcher.addObserver(&respawnSystem, Event::MAP_OBJECT_IN_VIEW, Event::ENTITY_IS_DEAD);
     entityManager.generateBullets(entityManager.bulletCacheSize);
     map.AddSearchPath("resources/sprites/");
 
@@ -102,7 +103,7 @@ void PlayState::handleEvents(cgf::Game *game) {
     }
 
     if (keyBitset.test(sf::Keyboard::LShift)) {
-        eventDispatcher.notify(make_event<FireEvent>(joe->getPosition() + sf::Vector2f(0, -200),
+        eventDispatcher.notify(make_event<FireEvent>(joe->getPosition() + sf::Vector2f(0, -100),
                                                      joe,
                                                      Weapon::weaponsConfig[MACHINE_GUN]));
 
@@ -269,16 +270,16 @@ void PlayState::computeEntityMapCollision() {
 
 
 void PlayState::computeObjectsInView(const sf::FloatRect &viewRect) {
-    for(auto& obj: objectsInView){
+    for (auto &obj: objectsInView) {
         auto mapObject = obj.first;
-        if(viewRect.contains(mapObject->GetCentre())){
-            if(!obj.second){
+        if (viewRect.intersects(mapObject->GetAABB())) {
+            if (!obj.second) {
                 eventDispatcher.notify(make_event<MObjectInView>(mapObject));
                 obj.second = true;
             }
 
         } else {
-            if(obj.second){
+            if (obj.second) {
                 obj.second = false;
             }
         }
