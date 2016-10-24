@@ -7,7 +7,8 @@
 #include "Joe.hpp"
 #include "EntityManager.hpp"
 #include "systems/CollisionSystem.hpp"
-
+#include "tmx/MapObject.h"
+#include <unordered_map>
 
 class PlayState final: public cgf::GameState {
 public:
@@ -62,4 +63,15 @@ private:
     // se foi pausado pelo usuário ao receber o evento de GainedFocus
     // não "despausa" o jogo.
     bool pausedByUser{true};
+
+    /*
+     * inicialmente objects seria um vetor "indexado" pelo id dos objetos
+     * porém de acordo com a documentação do formato tmx, se um objeto é deletado do mapa
+     * o id que ele continha nunca mais é utilizado, o que cria a possibilidade de buracos na
+     * sequência de IDs. Além disso a descrição do formato não indica em lugar nenhum que o id tem que ser
+     * numérco
+     * http://doc.mapeditor.org/reference/tmx-map-format/#object
+     */
+    std::unordered_map<std::string, tmx::MapObject*> objects;
+    std::unordered_map<std::string, bool> objectsInView;
 };

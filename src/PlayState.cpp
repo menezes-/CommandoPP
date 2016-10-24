@@ -2,6 +2,7 @@
 #include <events/FireEvent.hpp>
 #include <events/CollisionEvent.hpp>
 #include <GameMath.hpp>
+#include <cstdlib>
 
 
 void PlayState::init() {
@@ -22,13 +23,22 @@ PlayState::PlayState(cgf::Game *game)
 
     map.Load("level1.tmx");
 
+    bool joeIniPos{false};
     for (auto &layer : map.GetLayers()) {
         if (layer.name == "objects") {
-            for (auto obj: layer.objects) {
-                if (obj.GetName() == "hero") {
+            auto objSize = layer.objects.size();
+            objects.reserve(objSize);
+            for (auto &obj: layer.objects) {
+                auto strId = obj.GetId();
+                if (obj.GetName() == "hero" && !joeIniPos) {
                     joe->setPosition(obj.GetPosition().x, obj.GetAABB().top);
-                    break;
+                    // só por precaução
+                    joeIniPos = true;
                 }
+                if(objects.find(strId) != objects.end()){
+                    objects.insert(std::make_pair(strId, &obj));
+                }
+
             }
             break;
         }
@@ -62,13 +72,13 @@ void PlayState::handleEvents(cgf::Game *game) {
                 }
                 break;
             case sf::Event::LostFocus:
-                if(!isPaused) {
+                if (!isPaused) {
                     pausedByUser = false;
                     pause();
                 }
                 break;
             case sf::Event::GainedFocus:
-                if(!pausedByUser) {
+                if (!pausedByUser) {
                     pausedByUser = true;
                     resume();
                 }
@@ -214,18 +224,18 @@ sf::View PlayState::calcView(const sf::Vector2u &windowsize, const sf::Vector2u 
 
 void PlayState::computeEntityCollision() {
     auto size = entityManager.size();
-    std::vector<char> passados(size * size);
+    std::vector<bool> passados(size * size, false);
 
     for (auto x: entityManager) {
         for (auto y: entityManager) {
             if (x == y) continue;
             if (x->getState() != ALIVE || y->getState() != ALIVE) continue;
             auto pIndex = x->getId() * y->getId() + size;
-            if (passados[pIndex] == 'Y') continue;
+            if (passados[pIndex]) continue;
 
             if (x->isEnemy(*y) && x->bboxCollision(*y)) {
                 eventDispatcher.notify(make_event<CollisionEvent>(x, y));
-                passados[pIndex] = 'Y';
+                passados[pIndex] = true;
             }
         }
     }
