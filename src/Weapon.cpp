@@ -20,7 +20,7 @@ const std::array<WeaponConfig, WEAPON_COUNT> Weapon::weaponsConfig =
 
          {
              AUTOMATIC,
-             RPM(1000),
+             RPM(500),
              25,
              300,
              sf::seconds(1),
