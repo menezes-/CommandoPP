@@ -9,6 +9,11 @@ public:
 
     SoundSystem();
 
+    void playMusic();
+
+    void stopMusic();
+
+
 private:
     std::array<sf::SoundBuffer, GameSound::SOUND_COUNT> soundBuffers;
     std::array<sf::Sound, GameSound::SOUND_COUNT> sounds;
