@@ -8,6 +8,7 @@
 #include "EntityManager.hpp"
 #include "systems/CollisionSystem.hpp"
 #include "systems/RespawnSystem.hpp"
+#include "systems/SoundSystem.hpp"
 #include "tmx/MapObject.h"
 #include <unordered_map>
 
@@ -41,6 +42,7 @@ private:
     CollisionSystem collisionSystem;
     Joe *joe;
     EntityManager entityManager;
+    SoundSystem soundSystem;
 
     RespawnSystem respawnSystem;
 

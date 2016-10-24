@@ -13,10 +13,10 @@ public:
 
     void stopMusic();
 
+    void toggleGameMusic();
 
 private:
     std::array<sf::SoundBuffer, GameSound::SOUND_COUNT> soundBuffers;
     std::array<sf::Sound, GameSound::SOUND_COUNT> sounds;
     sf::Music gameMusic;
-
 };

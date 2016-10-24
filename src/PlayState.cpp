@@ -13,13 +13,14 @@ void PlayState::init() {
 
 PlayState::PlayState(cgf::Game *game)
     : game(game), map{"resources/levels/"}, entityManager{&eventDispatcher},
-      collisionSystem{}, hud(entityManager, isPaused), respawnSystem{entityManager} {
+      collisionSystem{}, hud(entityManager, isPaused), respawnSystem{entityManager}, soundSystem{} {
 
     joe = entityManager.getJoe();
     entityManager.setEventDispatcher(&eventDispatcher);
     eventDispatcher.addObserver(&collisionSystem, Event::COLLISION_EVENT);
     eventDispatcher.addObserver(&entityManager, Event::FIRE, Event::ENTITY_IS_DEAD);
     eventDispatcher.addObserver(&respawnSystem, Event::MAP_OBJECT_IN_VIEW, Event::ENTITY_IS_DEAD);
+    eventDispatcher.addObserver(&soundSystem, Event::PLAY_SOUND);
     entityManager.generateBullets(entityManager.bulletCacheSize);
     map.AddSearchPath("resources/sprites/");
 
@@ -43,6 +44,8 @@ PlayState::PlayState(cgf::Game *game)
             break;
         }
     }
+
+    soundSystem.playMusic();
 
 }
 
@@ -96,6 +99,11 @@ void PlayState::handleEvents(cgf::Game *game) {
         } else {
             resume();
         }
+    }
+
+    if (keyBitset.test(sf::Keyboard::M)) {
+        soundSystem.toggleGameMusic();
+
     }
 
     if (isPaused) {

@@ -1,5 +1,6 @@
 #include "EntityManager.hpp"
 #include <events/FireEvent.hpp>
+#include <events/PlaySoundEvent.hpp>
 
 
 void EntityManager::onNotify(const std::shared_ptr<GameEvent> &event) {
@@ -77,6 +78,9 @@ void EntityManager::entityIsDeadEvent(const std::shared_ptr<GameEvent> &event) {
     if (from && from->getType() == EntityType::BULLET) {
         auto bulltet_ptr = static_cast<Bullet *>(from);
         bulletCache.push_back(bulltet_ptr);
+    }
+    if (from && from->getType() == EntityType::JOE) {
+        eventDispatcher->notify(make_event<PlaySoundEvent>(GameSound::DEATH_SOUND));
     }
 
 }
