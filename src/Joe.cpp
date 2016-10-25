@@ -2,6 +2,7 @@
 #include <InputManager.h>
 #include <Debug.h>
 #include <events/FireEvent.hpp>
+#include <events/PlaySoundEvent.hpp>
 #include "GameMath.hpp"
 
 
@@ -184,6 +185,6 @@ void Joe::die() {
     setYspeed(0);
     setAndPlay("Die");
     setAnimRate(5);
-
+    eventDispatcher.notify(make_event<PlaySoundEvent>(GameSound::DEATH_SOUND));
     Entity::die();
 }
