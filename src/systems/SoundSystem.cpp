@@ -10,7 +10,7 @@ void SoundSystem::onNotify(const std::shared_ptr<GameEvent> &event) {
     if (sound.getStatus() == sf::Sound::Stopped) {
         auto wasPlaying = gameMusic.getStatus() == sf::Sound::Playing;
         if (wasPlaying) {
-            gameMusic.stop();
+            gameMusic.pause();
         }
 
         sound.play();
@@ -35,8 +35,8 @@ SoundSystem::SoundSystem() {
     soundBuffers[DEATH_SOUND] = deathSound;
     soundBuffers[GRENADE_FLY] = grenadeFly;
 
-    sounds[DEATH_SOUND] = sf::Sound{soundBuffers[DEATH_SOUND]};
-    sounds[GRENADE_FLY] = sf::Sound{soundBuffers[GRENADE_FLY]};
+    sounds[DEATH_SOUND] = sf::Sound{deathSound};
+    sounds[GRENADE_FLY] = sf::Sound{grenadeFly};
 
     gameMusic.setVolume(30);
 
@@ -58,9 +58,16 @@ void SoundSystem::stopMusic() {
 
 }
 
+void SoundSystem::pauseMusic() {
+    if (gameMusic.getStatus() == sf::Sound::Playing) {
+        gameMusic.pause();
+    }
+
+}
+
 void SoundSystem::toggleGameMusic(){
     if (gameMusic.getStatus() == sf::Sound::Playing){
-        gameMusic.stop();
+        gameMusic.pause();
     } else {
         gameMusic.play();
     }

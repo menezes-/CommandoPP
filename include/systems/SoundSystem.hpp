@@ -11,6 +11,8 @@ public:
 
     void playMusic();
 
+    void pauseMusic();
+
     void stopMusic();
 
     void toggleGameMusic();

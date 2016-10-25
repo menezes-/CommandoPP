@@ -167,12 +167,14 @@ void PlayState::pause() {
     if (!isPaused) {
         isPaused = true;
         hud.resetPausedClock();
+        soundSystem.pauseMusic();
     }
 }
 
 
 void PlayState::resume() {
     isPaused = false;
+    soundSystem.playMusic();
 }
 
 
