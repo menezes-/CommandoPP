@@ -97,13 +97,6 @@ void Joe::handleInput(const KeyBitset &pressedKeys, const MouseBitset &pressedBu
         diry = 1;
     }
 
-#ifndef NDEBUG
-    if (pressedKeys.test(sf::Keyboard::L)) {
-        loseHealth(config.health / 2);
-    }
-#endif
-
-
     auto weaponSelectionKyes =
         std::array<sf::Keyboard::Key, Weapons::WEAPON_COUNT>{
             {
