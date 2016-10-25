@@ -135,6 +135,10 @@ void Joe::handleInput(const KeyBitset &pressedKeys, const MouseBitset &pressedBu
         }
         setAndPlay(anim_find->second);
         play();
+        if(getAnimRate() != 10){
+            setAnimRate(10);
+        }
+
     }
 
     auto screen = gameObj->getScreen();
@@ -177,7 +181,7 @@ void Joe::die() {
     setXspeed(0);
     setYspeed(0);
     setAndPlay("Die");
-    setAnimRate(5);
+    setAnimRate(2);
     eventDispatcher.notify(make_event<PlaySoundEvent>(GameSound::DEATH_SOUND));
     Entity::die();
 }
