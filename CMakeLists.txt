@@ -1,8 +1,6 @@
 cmake_minimum_required(VERSION 3.6)
 project(Commando)
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin/${CMAKE_BUILD_TYPE}/")
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin/${CMAKE_BUILD_TYPE}")
 
 set(SOURCE_FILES main.cpp src/Entity.cpp include/Entity.hpp src/Joe.cpp include/Joe.hpp include/events/Observer.hpp src/events/EventDispatcher.cpp include/events/EventDispatcher.hpp src/PlayState.cpp include/PlayState.hpp src/Weapon.cpp include/Weapon.hpp src/Bullet.cpp include/Bullet.hpp src/events/GameEvent.cpp include/events/GameEvent.hpp src/events/FireEvent.cpp include/events/FireEvent.hpp include/GameMath.hpp include/events/Event.hpp src/events/CollisionEvent.cpp include/events/CollisionEvent.hpp src/systems/CollisionSystem.cpp include/systems/CollisionSystem.hpp src/EntityManager.cpp include/EntityManager.hpp src/Dude.cpp include/Dude.hpp src/HUD.cpp include/HUD.hpp src/events/MObjectInView.cpp include/events/MObjectInView.hpp src/systems/RespawnSystem.cpp include/systems/RespawnSystem.hpp src/events/PlaySoundEvent.cpp include/events/PlaySoundEvent.hpp src/systems/SoundSystem.cpp include/systems/SoundSystem.hpp)
 add_executable(Commando ${SOURCE_FILES})

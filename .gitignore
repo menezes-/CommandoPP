@@ -39,3 +39,4 @@ fabric.properties
 *.out
 *.app
 lib/CGF/
+build/
