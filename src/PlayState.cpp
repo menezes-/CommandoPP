@@ -43,6 +43,9 @@ PlayState::PlayState(cgf::Game *game)
                     dude->setPosition(obj.GetPosition());
                 }
                 else if(obj.GetName() == "sniper"){
+                    auto dude = entityManager.makeDude();
+                    dude->setPosition(obj.GetPosition());
+                    dude->setWeapon(Weapons::ZE_PEQUENO);
 
                 }
 
