@@ -5,7 +5,7 @@ start  => starting frame
 end    => ending frame
 loop   => looping animation (default)
 -->
-<animation name="joe">
+<animation name="dude">
     <sequence name="Up" start="45" end="47" loop="true"/>
     <sequence name="RightUp" start="48" end="50" loop="true"/>
     <sequence name="Right" start="51" end="53" loop="true"/>

@@ -5,13 +5,6 @@
 class FireEvent final: public GameEvent {
 public:
 
-    /**
-     * Atira em `target`, calcula a direção da bala automáticamente
-     * @param from quem atirou
-     * @param target quem vai comer bala
-     */
-    //FireEvent(Entity *from, Entity *target);
-
 
     /**
      * Atira na direção especificada por dirx e diry
@@ -31,7 +24,7 @@ public:
      * Permite um tiro vir de uma posição qualquer
      * (idealmente um tiro sempre deve vir de uma entidade)
      */
-     FireEvent(sf::Vector2f from, Entity *target, const WeaponConfig& weaponConfig);
+     FireEvent(sf::Vector2f from, Entity *target, const WeaponConfig* weaponConfig, float error);
 
 private:
     WeaponConfig weaponConfig;

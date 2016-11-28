@@ -38,76 +38,56 @@
  </layer>
  <objectgroup name="objects">
   <object id="1" name="hero" x="146" y="1577" width="30" height="26"/>
-  <object id="2" name="trooperGenerator" x="306" y="1511" width="115" height="19">
+  <object id="2" name="trooperGenerator" x="259.333" y="1490.33" width="19" height="12.3333">
    <properties>
     <property name="amount" value="n"/>
    </properties>
   </object>
-  <object id="3" name="prisoner" x="158" y="965" width="41" height="15">
-   <properties>
-    <property name="amount" value="1"/>
-   </properties>
-  </object>
-  <object id="4" name="escort" x="141" y="965" width="42" height="16">
-   <properties>
-    <property name="amount" value="1"/>
-   </properties>
-  </object>
-  <object id="5" name="trooper" x="4" y="1143" width="61" height="18"/>
-  <object id="6" name="grenadier" x="289" y="846" width="62" height="19">
-   <properties>
-    <property name="amount" value="1"/>
-   </properties>
-  </object>
-  <object id="7" name="trooper" x="6" y="178" width="49" height="17"/>
-  <object id="8" name="trooperGenerator" x="3" y="1439" width="115" height="21">
+  <object id="5" name="trooper" x="19.3333" y="1145" width="21" height="15.3333"/>
+  <object id="7" name="trooper" x="33.3333" y="185.333" width="30.3333" height="11.6667"/>
+  <object id="8" name="trooperGenerator" x="13" y="1441" width="17.6667" height="15.6667">
    <properties>
     <property name="amount" value="-1"/>
    </properties>
   </object>
-  <object id="9" name="trooperGenerator" x="305" y="1384" width="120" height="21">
+  <object id="9" name="trooperGenerator" x="274.333" y="1343.33" width="17.3333" height="12.3333">
    <properties>
     <property name="amount" value="-1"/>
    </properties>
   </object>
-  <object id="10" name="trooperGenerator" x="3" y="1348" width="118" height="20">
+  <object id="10" name="trooperGenerator" x="21.6667" y="1354" width="20.6667" height="15.3333">
    <properties>
     <property name="amount" value="-1"/>
    </properties>
   </object>
-  <object id="11" name="trooperGenerator" x="3" y="1286" width="116" height="21">
+  <object id="11" name="trooperGenerator" x="21.6667" y="1288.67" width="25.3333" height="17">
    <properties>
     <property name="amount" value="-1"/>
    </properties>
   </object>
-  <object id="12" name="trooper" x="218" y="1265" width="48" height="17"/>
-  <object id="13" name="escort" x="172" y="965" width="42" height="16">
-   <properties>
-    <property name="amount" value="1"/>
-   </properties>
-  </object>
-  <object id="14" name="trooperGenerator" x="300" y="922" width="117" height="22">
+  <object id="12" name="trooper" x="226.667" y="1266.33" width="21.3333" height="13.6667"/>
+  <object id="14" name="trooperGenerator" x="282.667" y="926" width="30.3333" height="13.3333">
    <properties>
     <property name="amount" value="-1"/>
    </properties>
   </object>
-  <object id="15" name="trooperGenerator" x="5" y="881" width="117" height="22">
+  <object id="15" name="trooperGenerator" x="25" y="887.667" width="22.3333" height="14">
    <properties>
     <property name="amount" value="-1"/>
    </properties>
   </object>
-  <object id="16" name="trooperGenerator" x="298" y="704" width="115" height="18">
+  <object id="16" name="trooperGenerator" x="291.333" y="718" width="31" height="13.3333">
    <properties>
     <property name="amount" value="-1"/>
    </properties>
   </object>
-  <object id="17" name="trooper" x="261" y="690" width="48" height="17"/>
-  <object id="18" name="trooperGenerator" x="5" y="481" width="116" height="19">
+  <object id="17" name="trooper" x="287" y="630" width="22" height="15"/>
+  <object id="18" name="trooperGenerator" x="18.3333" y="447.667" width="26" height="13.6667">
    <properties>
     <property name="amount" value="-1"/>
    </properties>
   </object>
-  <object id="19" name="trooperGenerator" x="148" y="18" width="26" height="39">
+  <object id="19" name="trooperGenerator" x="50" y="60.6667" width="26" height="16.3333">
    <properties>
     <property name="amount" value="6"/>
     <property name="delay" value="60"/>
@@ -116,16 +96,7 @@
    </properties>
   </object>
   <object id="20" name="officer" x="161" y="12" width="43" height="21"/>
-  <object id="21" name="grenades" x="196" y="1125" width="66" height="20"/>
-  <object id="22" name="grenades" x="253" y="831" width="66" height="20">
-   <properties>
-    <property name="amount" value="1"/>
-   </properties>
-  </object>
-  <object id="23" name="grenades" x="13" y="384" width="66" height="20"/>
-  <object id="24" name="grenades" x="4" y="292" width="66" height="20"/>
-  <object id="25" name="grenades" x="239" y="179" width="66" height="20"/>
-  <object id="26" name="trooperGenerator" x="287" y="459" width="116" height="20">
+  <object id="26" name="trooperGenerator" x="267.667" y="446.333" width="39.3333" height="13.3333">
    <properties>
     <property name="amount" value="-1"/>
    </properties>
@@ -135,7 +106,7 @@
     <property name="initial_delay" value="118"/>
    </properties>
   </object>
-  <object id="28" name="trooperGenerator" x="3" y="698" width="115" height="20">
+  <object id="28" name="trooperGenerator" x="15" y="708.667" width="27" height="10">
    <properties>
     <property name="amount" value="-1"/>
    </properties>
@@ -145,7 +116,7 @@
   <object id="31" name="respawn" x="161" y="806" width="27" height="21"/>
   <object id="32" name="respawn" x="159" y="543" width="27" height="21"/>
   <object id="33" name="respawn" x="158" y="320" width="27" height="21"/>
-  <object id="34" name="trooperGenerator" x="179" y="16" width="26" height="39">
+  <object id="34" name="trooperGenerator" x="217.667" y="67.3333" width="30.6667" height="12.3333">
    <properties>
     <property name="amount" value="6"/>
     <property name="delay" value="80"/>
@@ -153,46 +124,28 @@
     <property name="initial_delay" value="220"/>
    </properties>
   </object>
-  <object id="35" name="jumperGenerator" x="313" y="1261" width="116" height="17">
+  <object id="38" name="jumperGenerator" x="97" y="1082.33" width="37.3333" height="9.33333">
    <properties>
     <property name="amount" value="3"/>
     <property name="delay" value="60"/>
    </properties>
   </object>
-  <object id="36" name="trooperGenerator" x="295" y="745" width="118" height="21">
-   <properties>
-    <property name="amount" value="1"/>
-    <property name="shoot_probability" value="0"/>
-    <property name="z" value="100"/>
-   </properties>
-  </object>
-  <object id="37" name="biker" x="250" y="749" width="35" height="19">
-   <properties>
-    <property name="amount" value="1"/>
-   </properties>
-  </object>
-  <object id="38" name="jumperGenerator" x="9" y="1057" width="114" height="20">
-   <properties>
-    <property name="amount" value="3"/>
-    <property name="delay" value="60"/>
-   </properties>
-  </object>
-  <object id="39" name="sniper" x="234" y="1152" width="42" height="23"/>
-  <object id="40" name="sniper" x="90" y="624" width="42" height="21"/>
-  <object id="41" name="sniper" x="270" y="504" width="42" height="21"/>
-  <object id="42" name="sniper" x="186" y="588" width="42" height="21"/>
-  <object id="43" name="sniper" x="6" y="672" width="42" height="21"/>
-  <object id="44" name="sniper" x="162" y="696" width="42" height="21"/>
-  <object id="45" name="sniper" x="18" y="504" width="42" height="21"/>
-  <object id="46" name="sniper" x="126" y="504" width="42" height="21"/>
-  <object id="47" name="sniper" x="252" y="372" width="42" height="21"/>
-  <object id="48" name="sniper" x="66" y="408" width="42" height="21"/>
-  <object id="49" name="sniper" x="294" y="372" width="42" height="21"/>
-  <object id="50" name="sniper" x="24" y="336" width="42" height="21"/>
-  <object id="51" name="sniper" x="42" y="252" width="42" height="21"/>
-  <object id="52" name="sniper" x="294" y="228" width="42" height="21"/>
-  <object id="53" name="sniper" x="132" y="276" width="42" height="21"/>
-  <object id="54" name="sniper" x="252" y="228" width="42" height="21"/>
+  <object id="39" name="sniper" x="234" y="1132.67" width="20" height="16.3333"/>
+  <object id="40" name="sniper" x="87.3333" y="605.333" width="22" height="12.3333"/>
+  <object id="41" name="sniper" x="270.667" y="492.667" width="20.6667" height="9"/>
+  <object id="42" name="sniper" x="187.333" y="576" width="21.3333" height="10.3333"/>
+  <object id="43" name="sniper" x="18.6667" y="655.333" width="22" height="11"/>
+  <object id="44" name="sniper" x="162.667" y="681.333" width="20" height="12.3333"/>
+  <object id="45" name="sniper" x="20" y="490" width="18.6667" height="11.6667"/>
+  <object id="46" name="sniper" x="124.667" y="489.333" width="22" height="10.3333"/>
+  <object id="47" name="sniper" x="264.667" y="358.667" width="24" height="14.3333"/>
+  <object id="48" name="sniper" x="66" y="394.667" width="18.6667" height="11"/>
+  <object id="49" name="sniper" x="300" y="357.333" width="22" height="15"/>
+  <object id="50" name="sniper" x="26.6667" y="325.333" width="22" height="9"/>
+  <object id="51" name="sniper" x="34.6667" y="236.667" width="22" height="8.33333"/>
+  <object id="52" name="sniper" x="292.667" y="212.667" width="29.3333" height="11.6667"/>
+  <object id="53" name="sniper" x="146.667" y="265.333" width="11.3333" height="7.66667"/>
+  <object id="54" name="sniper" x="250" y="212.667" width="25.3333" height="13.6667"/>
  </objectgroup>
  <layer name="Closed Doors" width="28" height="134">
   <data encoding="base64">

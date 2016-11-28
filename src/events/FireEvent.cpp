@@ -32,16 +32,19 @@ FireEvent::FireEvent(Entity *from, sf::Vector2f direction)
 
 }
 
-FireEvent::FireEvent(sf::Vector2f from, Entity *target, const WeaponConfig &weaponConfig)
+
+FireEvent::FireEvent(sf::Vector2f from, Entity *target, const WeaponConfig *weaponConfig, float error)
     : GameEvent(FIRE) {
 
     auto angle = interceptionAngle(from,
                                    target->getPosition(),
                                    sf::Vector2f{target->getXspeed(), target->getYspeed()},
-                                   weaponConfig.ammo_velocity);
+                                   weaponConfig->ammo_velocity);
     direction = sf::Vector2f{std::cos(angle), std::sin(angle)};
 
-    this->weaponConfig = weaponConfig;
+    this->weaponConfig = *weaponConfig;
     this->position = from;
 
 }
+
+

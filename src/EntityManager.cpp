@@ -2,7 +2,6 @@
 #include <events/FireEvent.hpp>
 
 
-
 void EntityManager::onNotify(const std::shared_ptr<GameEvent> &event) {
     auto event_type = event->getEvent();
     switch (event_type) {
@@ -19,7 +18,7 @@ void EntityManager::onNotify(const std::shared_ptr<GameEvent> &event) {
 }
 
 
-EntityManager::EntityManager(EventDispatcher *eventDispatcher) {
+EntityManager::EntityManager(EventDispatcher *eventDispatcher): mt{std::random_device()()}, dist{0.0f, 1.0f} {
     auto entity = std::unique_ptr<Entity>(new Joe(EntityConfig{}, *eventDispatcher));
     Joe *e_ptr = static_cast<Joe *>(entity.get());
     entities.push_back(std::move(entity));
@@ -114,4 +113,12 @@ std::size_t EntityManager::size() const {
 
 Joe *EntityManager::getJoe() const {
     return joe;
+}
+
+
+Dude *EntityManager::makeDude() {
+    Dude* e_ptr = makeEntity<Dude>(*eventDispatcher);
+    e_ptr->setEnemy(joe);
+    e_ptr->setError(dist(mt));
+    return e_ptr;
 }

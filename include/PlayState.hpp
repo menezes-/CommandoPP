@@ -42,9 +42,11 @@ private:
     CollisionSystem collisionSystem;
     Joe *joe;
     EntityManager entityManager;
-    SoundSystem soundSystem;
-
     RespawnSystem respawnSystem;
+    SoundSystem soundSystem;
+   // EnemySpawnSystem enemySpawnSystem;
+
+
 
     void centerMapOnPlayer(sf::RenderWindow *);
 

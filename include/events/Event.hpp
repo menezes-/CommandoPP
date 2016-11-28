@@ -9,5 +9,6 @@ enum Event: short {
     COLLISION_EVENT,
     MAP_OBJECT_IN_VIEW,
     GAME_OVER,
-    PLAY_SOUND
+    PLAY_SOUND,
+    ADD_ENTITY
 };

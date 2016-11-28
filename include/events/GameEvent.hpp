@@ -43,7 +43,8 @@ protected:
 
 /**
  * Foi escolhido um shared_ptr pois não é possível saber se
- * alguns do observers vai querer copiar ou não o parametro do evento
+ * alguns dos observers vai querer copiar ou não o parametro do evento
+ *
  * @tparam T classe derivada de GameEvent
  * @tparam P parametros do evento
  * @param params parametros do evento

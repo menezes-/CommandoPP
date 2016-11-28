@@ -7,6 +7,8 @@
 #include <Game.h>
 #include "Bullet.hpp"
 #include "Joe.hpp"
+#include "Dude.hpp"
+#include <random>
 
 class EntityManager final: public Observer {
     using alive_t = std::set<Entity *>;
@@ -46,6 +48,8 @@ public:
         return e_ptr;
     }
 
+    Dude* makeDude();
+
     void update(const sf::FloatRect &viewRect);
 
     Joe *getJoe() const;
@@ -76,6 +80,8 @@ private:
     void entityIsDeadEvent(const std::shared_ptr<GameEvent> &event);
 
     void gamePauseEvent(const std::shared_ptr<GameEvent> &event);
+    std::mt19937 mt;
+    std::uniform_real_distribution<float> dist;
 
     Joe *joe;
 

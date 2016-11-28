@@ -55,7 +55,6 @@ void Bullet::onEntityCollision(Entity &other) {
         if (!other.getConfig().godMode) {
             other.loseHealth(damage);
             die();
-            eventDispatcher.notify(make_event<GameEvent>(this, &other, ENTITY_SHOT_ENTITY));
         }
     }
 

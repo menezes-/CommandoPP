@@ -1,9 +1,8 @@
 #include "PlayState.hpp"
-#include <events/FireEvent.hpp>
 #include <events/CollisionEvent.hpp>
 #include <GameMath.hpp>
-#include <cstdlib>
 #include <events/MObjectInView.hpp>
+
 
 
 void PlayState::init() {
@@ -13,7 +12,7 @@ void PlayState::init() {
 
 PlayState::PlayState(cgf::Game *game)
     : game(game), map{"resources/levels/"}, entityManager{&eventDispatcher},
-      collisionSystem{}, hud(entityManager, isPaused), respawnSystem{entityManager}, soundSystem{} {
+      collisionSystem{}, hud(entityManager, isPaused), respawnSystem{entityManager}, soundSystem{}{
 
     joe = entityManager.getJoe();
     entityManager.setEventDispatcher(&eventDispatcher);
@@ -21,6 +20,7 @@ PlayState::PlayState(cgf::Game *game)
     eventDispatcher.addObserver(&entityManager, Event::FIRE, Event::ENTITY_IS_DEAD);
     eventDispatcher.addObserver(&respawnSystem, Event::MAP_OBJECT_IN_VIEW, Event::ENTITY_IS_DEAD);
     eventDispatcher.addObserver(&soundSystem, Event::PLAY_SOUND);
+    //eventDispatcher.addObserver(&enemySpawnSystem, Event::MAP_OBJECT_IN_VIEW);
     entityManager.generateBullets(entityManager.bulletCacheSize);
     map.AddSearchPath("resources/sprites/");
 
@@ -36,6 +36,14 @@ PlayState::PlayState(cgf::Game *game)
                     joe->setPosition(obj.GetPosition().x, obj.GetAABB().top);
                     // só por precaução
                     joeIniPos = true;
+                }
+                else if (obj.GetName() == "trooper"){
+
+                    auto dude = entityManager.makeDude();
+                    dude->setPosition(obj.GetPosition());
+                }
+                else if(obj.GetName() == "sniper"){
+
                 }
 
                 objectsInView.insert(std::make_pair(&obj, false));
@@ -110,12 +118,6 @@ void PlayState::handleEvents(cgf::Game *game) {
         return;
     }
 
-    if (keyBitset.test(sf::Keyboard::LShift)) {
-        eventDispatcher.notify(make_event<FireEvent>(joe->getPosition() + sf::Vector2f(0, -100),
-                                                     joe,
-                                                     Weapon::weaponsConfig[MACHINE_GUN]));
-
-    }
 
     joe->handleInput(keyBitset, mouseBitset, game);
     centerMapOnPlayer(screen);
@@ -283,9 +285,13 @@ void PlayState::computeObjectsInView(const sf::FloatRect &viewRect) {
     for (auto &obj: objectsInView) {
         auto mapObject = obj.first;
         if (viewRect.intersects(mapObject->GetAABB())) {
-            if (!obj.second) {
-                eventDispatcher.notify(make_event<MObjectInView>(mapObject));
+            if (!obj.second) { // não estava em view e agora esta
+                eventDispatcher.notify(make_event<MObjectInView>(mapObject, true));
                 obj.second = true;
+            } else {
+                if (obj.second){ // estava em view e agora não está
+                    eventDispatcher.notify(make_event<MObjectInView>(mapObject, false));
+                }
             }
 
         } else {

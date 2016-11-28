@@ -69,8 +69,6 @@ void Entity::loseHealth(int amount) {
             health = config.health;
         }
         die();
-    } else {
-        eventDispatcher.notify(make_event<GameEvent>(this, Event::ENTITY_TOOK_DAMAGE));
     }
 
 }
